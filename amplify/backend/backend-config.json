@@ -1,14 +1,16 @@
 {
   "auth": {
-    "smp01baf00f": {
+    "smpdcb10a3e": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
       "customAuth": false,
       "frontendAuthConfig": {
-        "loginMechanisms": [
-          "PREFERRED_USERNAME"
+        "socialProviders": [
+          "FACEBOOK",
+          "GOOGLE"
         ],
+        "usernameAttributes": [],
         "signupAttributes": [
           "EMAIL"
         ],
