@@ -36,6 +36,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxNavigationWithDataComponent } from "ngx-navigation-with-data";
 import { ViewCampaignComponent } from './components/view-campaign/view-campaign.component';
+import { AmplifyAuthenticatorModule } from '@aws-amplify/ui-angular';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { ViewCampaignComponent } from './components/view-campaign/view-campaign.
     FormsModule,
     MatInputModule,
     NgSelectModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AmplifyAuthenticatorModule
   ],
   providers: [NgxNavigationWithDataComponent],
   bootstrap: [AppComponent]
