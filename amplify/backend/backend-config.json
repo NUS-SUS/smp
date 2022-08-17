@@ -1,6 +1,6 @@
 {
   "auth": {
-    "smp01f7b646": {
+    "smpe824f8a0": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -27,6 +27,5 @@
         ]
       }
     }
-  },
-  "hosting": {}
+  }
 }
