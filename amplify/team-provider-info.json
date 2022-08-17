@@ -13,13 +13,8 @@
     },
     "categories": {
       "auth": {
-        "smpdcb10a3e": {}
-      },
-      "hosting": {
-        "amplifyhosting": {
-          "appId": "d1tijxg2qi27xn",
-          "type": "manual"
-        }
+        "smpdcb10a3e": {},
+        "userPoolGroups": {}
       }
     }
   }
