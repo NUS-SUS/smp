@@ -1,0 +1,19 @@
+.btn-block {
+    display: block;
+    width: 80%;
+    background-color: #ff9900;
+    color: #ffffff;
+    margin: auto;
+    font-size: var(--amplify-text-sm);
+    font-family: var(--amplify-font-family);
+    font-weight: 600;
+  }
+
+.txt-block {
+    width: 100%;
+    height: 200px;
+}
+
+.banner{
+  background-color: azure;
+}
