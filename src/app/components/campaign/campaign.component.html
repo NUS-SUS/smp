@@ -1,20 +1,21 @@
-<div>
-  <button class="btn btn-primary float-end" style="margin-right: 1.5rem;">Create Campaign</button>
+&nbsp;
+<div *ngIf="user.USER_TYPE==='Company'">
+  <button class="btn btn-primary float-end" (click)="navigateToCreate()" style="margin-right: 1.5rem;">Create Campaign</button>
 </div>
 &nbsp;
 
 <div class="container">
   <div class="main-body">
     <div class="row gutters-sm">
-      <div class="col-md-12">
-        <div class="card mb-3">
-          <div class="card-body">
+      <div class="col-md-12" *ngIf="campaigns.length != 0">
+        <div class="card mb-3" *ngFor="let campaign of campaigns">
+          <div class="card-body" *ngIf="(campaign.STATUS == true)&&(user.USER_TYPE ==='Influencer')">
             <div class="row h-100">
               <div class="col-sm-3 my-auto">
                 <h5 class="mb-0">Campaign ID</h5>
               </div>
               <div class="col-sm-9 text-secondary my-auto">
-                CAMPAIGN ID
+                {{campaign.CAMPAIGNS_ID}}
               </div>
             </div>
             <hr>
@@ -23,7 +24,7 @@
                 <h5 class="mb-0">Campaign Name</h5>
               </div>
               <div class="col-sm-9 text-secondary my-auto">
-                CAMPAIGN NAME
+                {{campaign.CAMPAIGN_NAME}}
               </div>
             </div>
             <hr>
@@ -32,7 +33,7 @@
                 <h5 class="mb-0">Descriptions</h5>
               </div>
               <div class="col-sm-9 text-secondary my-auto">
-                DESCRIPTION
+                {{campaign.DESCRIPTION}}
               </div>
             </div>
             <hr>
@@ -41,7 +42,7 @@
                 <h5 class="mb-0">Category</h5>
               </div>
               <div class="col-sm-9 text-secondary my-auto">
-                CATEGORY
+                {{campaign.CATEGORY}}
               </div>
             </div>
             <hr>
@@ -50,9 +51,9 @@
                 <h5 class="mb-0">Tags</h5>
               </div>
               <div class="col-sm-9 text-secondary my-auto">
-                <div class="widget-26-job-category bg-soft-warning">
+                <div class="widget-26-job-category bg-soft-warning" *ngFor="let tag of campaign.TAGS">
                   <i class="indicator bg-warning"></i>
-                  <span>TAG</span>
+                  <span>{{tag}}</span>
                 </div>
               </div>
             </div>
@@ -62,7 +63,7 @@
                 <h5 class="mb-0">Venue</h5>
               </div>
               <div class="col-sm-9 text-secondary my-auto">
-                VENUE
+                {{campaign.VENUE}}
               </div>
             </div>
             <hr>
@@ -71,7 +72,7 @@
                 <h5 class="mb-0">Start Date</h5>
               </div>
               <div class="col-sm-9 text-secondary my-auto">
-                START DATE
+                {{campaign.START_DATE}}
               </div>
             </div>
             <hr>
@@ -80,19 +81,19 @@
                 <h5 class="mb-0">End Date</h5>
               </div>
               <div class="col-sm-9 text-secondary my-auto">
-                END DATE
+                {{campaign.END_DATE}}
               </div>
             </div>
             <hr>
             &nbsp;
           </div>
-          <div class="card-body">
+          <div class="card-body" *ngIf="(campaign.STATUS == true)&&(user.USER_TYPE ==='Company')&&(user.COMPANY_NAME === campaign.COMPANIES_ID)">
             <div class="row h-100">
               <div class="col-sm-3 my-auto">
                 <h5 class="mb-0">Campaign ID</h5>
               </div>
               <div class="col-sm-9 text-secondary my-auto">
-                CAMPAIGN ID
+                {{campaign.CAMPAIGNS_ID}}
               </div>
             </div>
             <hr>
@@ -101,7 +102,7 @@
                 <h5 class="mb-0">Campaign Name</h5>
               </div>
               <div class="col-sm-9 text-secondary my-auto">
-                CAMPAIGN NAME
+                {{campaign.CAMPAIGN_NAME}}
               </div>
             </div>
             <hr>
@@ -110,7 +111,7 @@
                 <h5 class="mb-0">Descriptions</h5>
               </div>
               <div class="col-sm-9 text-secondary my-auto">
-                DESCRIPTION
+                {{campaign.DESCRIPTION}}
               </div>
             </div>
             <hr>
@@ -119,7 +120,7 @@
                 <h5 class="mb-0">Category</h5>
               </div>
               <div class="col-sm-9 text-secondary my-auto">
-                CATEGORY
+                {{campaign.CATEGORY}}
               </div>
             </div>
             <hr>
@@ -128,9 +129,9 @@
                 <h5 class="mb-0">Tags</h5>
               </div>
               <div class="col-sm-9 text-secondary my-auto">
-                <div class="widget-26-job-category bg-soft-warning">
+                <div class="widget-26-job-category bg-soft-warning" *ngFor="let tag of campaign.TAGS">
                   <i class="indicator bg-warning"></i>
-                  <span>TAG</span>
+                  <span>{{tag}}</span>
                 </div>
               </div>
             </div>
@@ -140,7 +141,7 @@
                 <h5 class="mb-0">Venue</h5>
               </div>
               <div class="col-sm-9 text-secondary my-auto">
-                VENUE
+                {{campaign.VENUE}}
               </div>
             </div>
             <hr>
@@ -149,7 +150,7 @@
                 <h5 class="mb-0">Start Date</h5>
               </div>
               <div class="col-sm-9 text-secondary my-auto">
-                START DATE
+                {{campaign.START_DATE}}
               </div>
             </div>
             <hr>
@@ -158,13 +159,13 @@
                 <h5 class="mb-0">End Date</h5>
               </div>
               <div class="col-sm-9 text-secondary my-auto">
-                END DATE
+                {{campaign.END_DATE}}
               </div>
             </div>
             <hr>
             &nbsp;
-            <nav>
-              <button class="btn btn-primary float-end">Edit
+            <nav *ngIf="user.USER_TYPE==='Company'">
+              <button class="btn btn-primary float-end" (click)="navigateToEdit(campaign)">Edit
                 Campaign</button>&nbsp;
             </nav><br>
           </div>

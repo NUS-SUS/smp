@@ -1,0 +1,89 @@
+<div class="container">
+    <div class="main-body">
+        <div class="row gutters-sm">
+            <div class="col-md-12">
+                <div class="card-body">
+                    <div class="row h-100">
+                        <h1 class="card-title">{{title}}</h1>
+                        <form (ngSubmit)="addCampaign()" #createForm="ngForm">
+                            <div class="form-group">
+                                <label for="name">Campaign Name:</label>
+                                <input type="text" class="form-control" id="name" required
+                                    [(ngModel)]="campaign.CAMPAIGN_NAME" name="name">
+                                <!-- <input type="text" class="form-control" id="name" required [(ngModel)]="model.name" name="name" #name="ngModel"> -->
+                            </div><br>
+                            <div class="form-group">
+                                <label for="Descriptions">Campaign Description:</label>
+                                <input type="text" class="form-control" id="Descriptions" required
+                                    [(ngModel)]="campaign.DESCRIPTION" name="Descriptions">
+                            </div><br>
+                            <!-- <div class="form-group">
+                                <label for="Tags">Tags</label>
+                                <input type="text" class="form-control" id="Tags" required [(ngModel)]="campaign.TAGS"
+                                    name="Tags">
+                            </div><br>
+                            <div class="form-group">
+                                <label for="Category">Category</label>
+                                <input type="text" class="form-control" id="Category" required
+                                    [(ngModel)]="campaign.CATEGORY" name="Category">
+                            </div><br> -->
+
+                            <div class="form-group">
+                                <label for="Category">Category</label>
+                                <ng-select (change)="getTags()" class="form-control" [items]="categories"
+                                    bindLabel="VALUE" bindValue="VALUE" required [(ngModel)]="campaign.CATEGORY"
+                                    name="Category">
+                                </ng-select>
+                            </div><br>
+
+                            <div class="form-group">
+                                <label for="Tags">Tags</label>
+                                <ng-select class="form-control" [multiple]=true [items]="tags" bindLabel="VALUE"
+                                    bindValue="VALUE" required [(ngModel)]="campaign.TAGS" name="Tags">
+                                </ng-select>
+                            </div><br>
+
+                            <div class="form-group">
+                                <label for="Venue">Venue</label>
+                                <input type="text" class="form-control" id="Venue" required [(ngModel)]="campaign.VENUE"
+                                    name="Venue">
+                            </div><br>
+                            <div class="form-group">
+                                <label for="CompanyID">Company ID</label>
+                                <input type="text" class="form-control" id="CompanyID" required readonly
+                                    [(ngModel)]="user.COMPANY_NAME" name="CompanyID">
+                            </div><br>
+                            <div class="form-group">
+                                <label for="startDate">Start Date</label>
+                                <input type="date" class="form-control" id="startDate" placeholder="DD/MM/YYYY" required
+                                    [(ngModel)]="campaign.START_DATE" name="startDate">
+
+                            </div><br>
+                            <div class="form-group">
+                                <label for="endDate">End Date</label>
+                                <input type="date" class="form-control" id="endDate" placeholder="DD/MM/YYYY" required
+                                    [(ngModel)]="campaign.END_DATE" name="endDate">
+                            </div><br>
+                            <div class="form-group">
+                                <label for="campaignFund">Campaign Fund</label>
+                                <input type="text" class="form-control" id="campaignFund" required readonly
+                                    [(ngModel)]="user.CAMPAIGN_FUNDS" name="campaignFund">
+                            </div><br>
+                            <nav  *ngIf="user.CAMPAIGN_FUNDS < 5">
+                                Please Top-up.  
+                                <button class="btn btn-outline-danger" (click)="navigateToFunds()" style = "margin-bottom: 1rem;">Top Up Campaign Funds</button>
+                            </nav>
+                            &nbsp;
+                            <button type="submit" class="btn btn-primary"
+                                [disabled]="!createForm.form.valid || user.CAMPAIGN_FUNDS < 5">Submit</button>
+                            &nbsp;
+                            <button type="button" class="btn btn-outline-danger"
+                                onClick="window.location.href='/campaign'">Cancel</button>
+                            &nbsp;
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
