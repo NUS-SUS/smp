@@ -15,7 +15,6 @@ export class ViewCampaignComponent implements OnInit {
 
   ngOnInit(): void {
     this.email = "halimin@email.com"
-    // this.campaign = this.campaignsService.getCurrentCampaign();
     this.campaign = JSON.parse(localStorage.getItem('campaign'));
     console.log(this.campaignsService.getCurrentCampaign());
     console.log(JSON.parse(localStorage.getItem('campaign')))

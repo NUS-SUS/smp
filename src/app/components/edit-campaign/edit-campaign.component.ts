@@ -16,8 +16,8 @@ export class EditCampaignComponent implements OnInit {
   constructor(private campaignsService: CampaignsService, private router: Router, private classificationService: ClassificationsService) { }
 
   ngOnInit(): void {
-    this.campaign = JSON.parse(localStorage.getItem('campaign'))//this.campaignsService.getCurrentCampaign();
-    console.log(this.campaign.START_DATE);
+    this.campaign = JSON.parse(localStorage.getItem('campaign'));
+    console.log(this.campaign);
   }
 
   updateCampaign() {

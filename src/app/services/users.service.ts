@@ -86,7 +86,6 @@ export class UsersService {
   public getCurrentUser(): Observable<UserModel> {
     return from(this.getCurrentUserPromise.apply(null)).pipe(
       switchMap((user: User) => {
-        console.log(user);
         return this.getUser(user.EMAIL);
       })
     )
