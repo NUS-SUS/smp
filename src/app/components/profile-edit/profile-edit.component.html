@@ -1,0 +1,396 @@
+<div class="container">
+    <div class="main-body">
+        <div class="row gutters-sm">
+            <div class="col-md-12">
+                <div class="card mb-3" *ngIf="editUser">
+                    <div class="card-body">
+                        <form [formGroup]="profileForm" (ngSubmit)="editForm()">
+                            <div class="row h-100 border-bottom">
+                                <div class="col-sm-4 my-auto">
+                                    EMAIL
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <input class="form-control" formControlName="EMAIL" type="text" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom">
+                                <div class="col-sm-4 my-auto">
+                                    ACCOUNT TYPE
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <input class="form-control" formControlName="USER_TYPE" type="text" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom"
+                                *ngIf="profileForm.controls['USER_TYPE'].value==='Company'">
+                                <div class="col-sm-4 my-auto">
+                                    COMPANY NAME
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <input class="form-control" formControlName="COMPANY_NAME" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom"
+                                *ngIf="profileForm.controls['USER_TYPE'].value==='Company'">
+                                <div class="col-sm-4 my-auto">
+                                    CAMPAIGN_FUNDS
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <input class="form-control" formControlName="CAMPAIGN_FUNDS" type="number"
+                                            readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom"
+                                *ngIf="profileForm.controls['USER_TYPE'].value==='Influencer'">
+                                <div class="col-sm-4 my-auto">
+                                    BIRTH DATE
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <input class="form-control" formControlName="BIRTHDATE" type="date">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom"
+                                *ngIf="profileForm.controls['USER_TYPE'].value==='Influencer'">
+                                <div class="col-sm-4 my-auto">
+                                    CATEGORY
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <ng-select (change)="getTags()" class="form-control" [items]="categories"
+                                            bindLabel="VALUE" bindValue="VALUE" formControlName="CATEGORY">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom"
+                                *ngIf="profileForm.controls['USER_TYPE'].value==='Influencer'">
+                                <div class="col-sm-4 my-auto">
+                                    TAGS
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <ng-select class="form-control" [multiple]=true [items]="tags" bindLabel="VALUE"
+                                            bindValue="VALUE" formControlName="TAGS">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom">
+                                <div class="col-sm-4 my-auto">
+                                    NATIONALITY
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <ng-select class="form-control" [searchable]="true" [items]="countries"
+                                            bindLabel="name" bindValue="name" formControlName="NATIONALITY">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom"
+                                *ngIf="profileForm.controls['USER_TYPE'].value==='Influencer'">
+                                <div class="col-sm-4 my-auto">
+                                    LANGUAGE
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <ng-select class="form-control" [multiple]=true [items]="languages"
+                                            bindLabel="name" bindValue="name" formControlName="LANGUAGE">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom"
+                                *ngIf="profileForm.controls['USER_TYPE'].value==='Influencer'">
+                                <div class="col-sm-4 my-auto">
+                                    SOCIAL MEDIA
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <input class="form-control" formControlName="SOCIAL_MEDIA" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom"
+                                *ngIf="profileForm.controls['USER_TYPE'].value==='Influencer'">
+                                <div class="col-sm-4 my-auto">
+                                    FULL NAME
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <input class="form-control" formControlName="FULL_NAME" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom">
+                                <div class="col-sm-4 my-auto">
+                                    CONTACT NUMBER
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <input class="form-control" formControlName="CONTACT_NUMBER" type="number">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom">
+                                <div class="col-sm-4 my-auto">
+                                    BLOCK NUMBER
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <input class="form-control" formControlName="BLOCK_NUMBER" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom">
+                                <div class="col-sm-4 my-auto">
+                                    STREET NAME
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <input class="form-control" formControlName="STREET_NAME" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom">
+                                <div class="col-sm-4 my-auto">
+                                    UNIT NUMBER
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <input class="form-control" formControlName="UNIT_NUMBER" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom">
+                                <div class="col-sm-4 my-auto">
+                                    POSTAL CODE
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <input class="form-control" formControlName="POSTAL_CODE" type="number">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 mt-3">
+                                <div class="col-sm-12 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <a class="btn btn-secondary" style="float: left;"
+                                            [routerLink]="['/profile']">Back</a>
+                                        <button class="btn btn-success btn-block" style="float: right;"
+                                            [disabled]="!profileForm.valid">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="card mb-3" *ngIf="addUser">
+                    <div class="card-body">
+                        <form [formGroup]="profileForm" (ngSubmit)="addForm()">
+                            <div class="row h-100 border-bottom">
+                                <div class="col-sm-4 my-auto">
+                                    EMAIL
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <input class="form-control" formControlName="EMAIL" type="text" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom">
+                                <div class="col-sm-4 my-auto">
+                                    ACCOUNT TYPE
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <ng-select class="form-control" [items]="userType" bindLabel="name"
+                                            bindValue="name" formControlName="USER_TYPE">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom"
+                                *ngIf="profileForm.controls['USER_TYPE'].value==='Company'">
+                                <div class="col-sm-4 my-auto">
+                                    COMPANY NAME
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <input class="form-control" formControlName="COMPANY_NAME" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom"
+                                *ngIf="profileForm.controls['USER_TYPE'].value==='Company'">
+                                <div class="col-sm-4 my-auto">
+                                    CAMPAIGN_FUNDS
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <input class="form-control" formControlName="CAMPAIGN_FUNDS" type="number"
+                                            readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom"
+                                *ngIf="profileForm.controls['USER_TYPE'].value=='Influencer'">
+                                <div class="col-sm-4 my-auto">
+                                    BIRTH DATE
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <input class="form-control" formControlName="BIRTHDATE" type="date">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom"
+                                *ngIf="profileForm.controls['USER_TYPE'].value==='Influencer'">
+                                <div class="col-sm-4 my-auto">
+                                    CATEGORY
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <ng-select (change)="getTags()" class="form-control" [items]="categories" bindLabel="VALUE"
+                                            bindValue="VALUE" formControlName="CATEGORY">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom"
+                                *ngIf="profileForm.controls['USER_TYPE'].value==='Influencer'">
+                                <div class="col-sm-4 my-auto">
+                                    TAGS
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <ng-select class="form-control" [multiple]=true [items]="tags" bindLabel="VALUE"
+                                            bindValue="VALUE" formControlName="TAGS">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom">
+                                <div class="col-sm-4 my-auto">
+                                    NATIONALITY
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <ng-select class="form-control" [items]="countries" bindLabel="name"
+                                            bindValue="name" formControlName="NATIONALITY">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom"
+                                *ngIf="profileForm.controls['USER_TYPE'].value==='Influencer'">
+                                <div class="col-sm-4 my-auto">
+                                    LANGUAGE
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <ng-select class="form-control" [multiple]=true [items]="languages"
+                                            bindLabel="name" bindValue="name" formControlName="LANGUAGE">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom"
+                                *ngIf="profileForm.controls['USER_TYPE'].value==='Influencer'">
+                                <div class="col-sm-4 my-auto">
+                                    SOCIAL MEDIA
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <input class="form-control" formControlName="SOCIAL_MEDIA" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom"
+                                *ngIf="profileForm.controls['USER_TYPE'].value==='Influencer'">
+                                <div class="col-sm-4 my-auto">
+                                    FULL NAME
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <input class="form-control" formControlName="FULL_NAME" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom">
+                                <div class="col-sm-4 my-auto">
+                                    CONTACT NUMBER
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <input class="form-control" formControlName="CONTACT_NUMBER" type="number">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom">
+                                <div class="col-sm-4 my-auto">
+                                    BLOCK NUMBER
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <input class="form-control" formControlName="BLOCK_NUMBER" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom">
+                                <div class="col-sm-4 my-auto">
+                                    STREET NAME
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <input class="form-control" formControlName="STREET_NAME" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom">
+                                <div class="col-sm-4 my-auto">
+                                    UNIT NUMBER
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <input class="form-control" formControlName="UNIT_NUMBER" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 border-bottom">
+                                <div class="col-sm-4 my-auto">
+                                    POSTAL CODE
+                                </div>
+                                <div class="col-sm-8 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <input class="form-control" formControlName="POSTAL_CODE" type="number">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100 mt-3">
+                                <div class="col-sm-12 text-secondary my-auto">
+                                    <div class="form-group">
+                                        <a class="btn btn-secondary" style="float: left;"
+                                            [routerLink]="['/profile']">Back</a>
+                                        <button class="btn btn-success btn-block" style="float: right;"
+                                            [disabled]="!profileForm.valid">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

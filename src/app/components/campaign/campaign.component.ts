@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Campaign } from 'src/app/interfaces/Campaign';
 import { CampaignsService } from 'src/app/services/campaigns.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-campaign',
@@ -14,7 +15,7 @@ export class CampaignComponent implements OnInit {
     USER_TYPE: "Company",
     COMPANY_NAME: "000001"
   }
-  constructor(private router:Router, private campaignsService: CampaignsService) {
+  constructor(private userService: UsersService, private router:Router, private campaignsService: CampaignsService) {
     console.log();
   }
 
@@ -22,7 +23,10 @@ export class CampaignComponent implements OnInit {
     this.campaignsService.getCampaigns().subscribe((data: any) => {
       this.campaigns = data.campaigns;
       console.log(this.campaigns);
-    })
+    });
+    this.userService.getCurrentUser().subscribe(data => {
+      this.user = data
+    });
   }
 
   navigateToEdit(campaign: Campaign) {

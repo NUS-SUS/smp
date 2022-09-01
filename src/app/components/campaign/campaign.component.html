@@ -33,6 +33,185 @@
                 <h5 class="mb-0">Descriptions</h5>
               </div>
               <div class="col-sm-9 text-secondary my-auto">
+                {{campaign.DESCRIPTIONS}}
+              </div>
+            </div>
+            <hr>
+            <div class="row h-100">
+              <div class="col-sm-3 my-auto">
+                <h5 class="mb-0">Category</h5>
+              </div>
+              <div class="col-sm-9 text-secondary my-auto">
+                {{campaign.CATEGORY}}
+              </div>
+            </div>
+            <hr>
+            <div class="row h-100">
+              <div class="col-sm-3 my-auto">
+                <h5 class="mb-0">Tags</h5>
+              </div>
+              <div class="col-sm-9 text-secondary my-auto">
+                <div class="widget-26-job-category bg-soft-warning" *ngFor="let tag of campaign.TAGS">
+                  <i class="indicator bg-warning"></i>
+                  <span>{{tag}}</span>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="row h-100">
+              <div class="col-sm-3 my-auto">
+                <h5 class="mb-0">Venue</h5>
+              </div>
+              <div class="col-sm-9 text-secondary my-auto">
+                {{campaign.VENUE}}
+              </div>
+            </div>
+            <hr>
+            <div class="row h-100">
+              <div class="col-sm-3 my-auto">
+                <h5 class="mb-0">Start Date</h5>
+              </div>
+              <div class="col-sm-9 text-secondary my-auto">
+                {{campaign.START_DATE}}
+              </div>
+            </div>
+            <hr>
+            <div class="row h-100">
+              <div class="col-sm-3 my-auto">
+                <h5 class="mb-0">End Date</h5>
+              </div>
+              <div class="col-sm-9 text-secondary my-auto">
+                {{campaign.END_DATE}}
+              </div>
+            </div>
+            <hr>
+            &nbsp;
+          </div>
+          <div class="card-body" *ngIf="(campaign.STATUS == true)&&(user.USER_TYPE ==='Company')&&(user.COMPANY_NAME === campaign.COMPANIES_ID)">
+            <div class="row h-100">
+              <div class="col-sm-3 my-auto">
+                <h5 class="mb-0">Campaign ID</h5>
+              </div>
+              <div class="col-sm-9 text-secondary my-auto">
+                {{campaign.CAMPAIGNS_ID}}
+              </div>
+            </div>
+            <hr>
+            <div class="row h-100">
+              <div class="col-sm-3 my-auto">
+                <h5 class="mb-0">Campaign Name</h5>
+              </div>
+              <div class="col-sm-9 text-secondary my-auto">
+                {{campaign.CAMPAIGN_NAME}}
+              </div>
+            </div>
+            <hr>
+            <div class="row h-100">
+              <div class="col-sm-3 my-auto">
+                <h5 class="mb-0">Descriptions</h5>
+              </div>
+              <div class="col-sm-9 text-secondary my-auto">
+                {{campaign.DESCRIPTION}}
+              </div>
+            </div>
+            <hr>
+            <div class="row h-100">
+              <div class="col-sm-3 my-auto">
+                <h5 class="mb-0">Category</h5>
+              </div>
+              <div class="col-sm-9 text-secondary my-auto">
+                {{campaign.CATEGORY}}
+              </div>
+            </div>
+            <hr>
+            <div class="row h-100">
+              <div class="col-sm-3 my-auto">
+                <h5 class="mb-0">Tags</h5>
+              </div>
+              <div class="col-sm-9 text-secondary my-auto">
+                <div class="widget-26-job-category bg-soft-warning" *ngFor="let tag of campaign.TAGS">
+                  <i class="indicator bg-warning"></i>
+                  <span>{{tag}}</span>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="row h-100">
+              <div class="col-sm-3 my-auto">
+                <h5 class="mb-0">Venue</h5>
+              </div>
+              <div class="col-sm-9 text-secondary my-auto">
+                {{campaign.VENUE}}
+              </div>
+            </div>
+            <hr>
+            <div class="row h-100">
+              <div class="col-sm-3 my-auto">
+                <h5 class="mb-0">Start Date</h5>
+              </div>
+              <div class="col-sm-9 text-secondary my-auto">
+                {{campaign.START_DATE}}
+              </div>
+            </div>
+            <hr>
+            <div class="row h-100">
+              <div class="col-sm-3 my-auto">
+                <h5 class="mb-0">End Date</h5>
+              </div>
+              <div class="col-sm-9 text-secondary my-auto">
+                {{campaign.END_DATE}}
+              </div>
+            </div>
+            <hr>
+            &nbsp;
+            <nav *ngIf="user.USER_TYPE==='Company'">
+              <button class="btn btn-primary float-end" (click)="navigateToEdit(campaign.CAMPAIGNS_ID)">Edit
+                Campaign</button>&nbsp;
+            </nav><br>
+          </div>
+
+
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div><!-- &nbsp;
+<div *ngIf="user.USER_TYPE==='Company'">
+  <button class="btn btn-primary float-end" (click)="navigateToCreate()" style="margin-right: 1.5rem;">Create Campaign</button>
+</div>
+&nbsp;
+
+<div class="container">
+  <div class="main-body">
+    <div class="row gutters-sm">
+      <div class="col-md-12" *ngIf="campaigns.length != 0">
+        <div class="card mb-3" *ngFor="let campaign of campaigns">
+          <div class="card-body" *ngIf="(campaign.STATUS == true)&&(user.USER_TYPE ==='Influencer')">
+            <div class="row h-100">
+              <div class="col-sm-3 my-auto">
+                <h5 class="mb-0">Campaign ID</h5>
+              </div>
+              <div class="col-sm-9 text-secondary my-auto">
+                {{campaign.CAMPAIGNS_ID}}
+              </div>
+            </div>
+            <hr>
+            <div class="row h-100">
+              <div class="col-sm-3 my-auto">
+                <h5 class="mb-0">Campaign Name</h5>
+              </div>
+              <div class="col-sm-9 text-secondary my-auto">
+                {{campaign.CAMPAIGN_NAME}}
+              </div>
+            </div>
+            <hr>
+            <div class="row h-100">
+              <div class="col-sm-3 my-auto">
+                <h5 class="mb-0">Descriptions</h5>
+              </div>
+              <div class="col-sm-9 text-secondary my-auto">
                 {{campaign.DESCRIPTION}}
               </div>
             </div>
@@ -177,4 +356,4 @@
     </div>
 
   </div>
-</div>
+</div> -->

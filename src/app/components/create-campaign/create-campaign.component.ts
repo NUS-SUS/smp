@@ -106,12 +106,21 @@ export class CreateCampaignComponent implements OnInit {
   }
 
   getTags() {
-    let a : any
-    console.log("HELLO");
     // console.log(this.classificationsService.getTags(this.campaign.CATEGORY));
-    this.classificationsService.getTags(this.campaign.CATEGORY).subscribe((data: any) => {
-      this.tags = data.classifications;
-    })
+    var parentId : any = '';
+    this.classifications.classifications.forEach((element) => {
+      console.log(element.VALUE);
+      console.log(this.campaign.CATEGORY);
+      console.log(element.VALUE === this.campaign.CATEGORY);
+      if (element.VALUE === this.campaign.CATEGORY) {
+        parentId = element.CLASSIFICATIONS_ID;
+        this.classificationsService.getTags(parentId).subscribe((data: any) => {
+          this.tags = data.classifications;
+          console.log(data);
+        });
+        this.ref.detectChanges();
+      }
+    });
     // this.campaign.TAGS = this.classificationsService.getTags(this.campaign.CATEGORY);
     // this.ngZone.run(() => {
     //   if (this.tags.length > 0) {

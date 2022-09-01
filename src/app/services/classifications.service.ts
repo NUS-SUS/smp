@@ -22,7 +22,7 @@ export class ClassificationsService {
     return this.httpClient.get<Classification[]>(url,httpOptions);
   }
   public getTags(PARENT: string): Observable<Classification[]> {
-    const url = `${this.REST_API_SERVER}/classifications?TYPES=TAGS&PARENT=${PARENT}`;
+    const url = `${this.REST_API_SERVER}/classification?TYPES=TAGS&PARENT=${PARENT}`;
     return this.httpClient.get<Classification[]>(url,httpOptions);
   }
 }

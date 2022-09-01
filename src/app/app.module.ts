@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule, NgOption } from '@ng-select/ng-select';
 
 import { AppComponent } from './app.component';
@@ -18,6 +18,8 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ViewCampaignComponent } from './components/view-campaign/view-campaign.component';
 import { CreateCampaignComponent } from './components/create-campaign/create-campaign.component';
 import { EditCampaignComponent } from './components/edit-campaign/edit-campaign.component';
+import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
+
 
 
 @NgModule({
@@ -31,6 +33,7 @@ import { EditCampaignComponent } from './components/edit-campaign/edit-campaign.
     ViewCampaignComponent,
     CreateCampaignComponent,
     EditCampaignComponent,
+    ProfileEditComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +41,7 @@ import { EditCampaignComponent } from './components/edit-campaign/edit-campaign.
     AmplifyAuthenticatorModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     NgSelectModule,
     RouterModule.forRoot([
       {path: 'discover', component: DiscoverComponent},
@@ -47,7 +51,8 @@ import { EditCampaignComponent } from './components/edit-campaign/edit-campaign.
       {path: 'profile', component: ProfileComponent},
       {path: 'view-campaign', component: ViewCampaignComponent},
       {path: 'create-campaign', component: CreateCampaignComponent},
-      {path: 'edit-campaign', component: EditCampaignComponent}
+      {path: 'edit-campaign', component: EditCampaignComponent},
+      {path: 'profile-edit', component: ProfileEditComponent}
     ])
   ],
   providers: [],

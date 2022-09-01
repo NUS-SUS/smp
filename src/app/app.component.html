@@ -24,8 +24,8 @@
           <li class="nav-item">
               <a class="nav-link" href="/profile">Profile</a>
           </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/checkout">Add Credit</a>
+          <li class="nav-item" *ngIf="isCompany == true">
+            <a class="nav-link" href="/checkout">Add Credit</a>
           </li>
           <li class="nav-item">
               <a class="nav-link" href="/feedback">Give Your Feedback</a>
