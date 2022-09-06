@@ -46,6 +46,7 @@ import { RedirectionComponent } from './components/redirection/redirection.compo
     ReactiveFormsModule,
     NgSelectModule,
     RouterModule.forRoot([
+      {path: '', component: HomeComponent},
       {path: 'discover', component: DiscoverComponent},
       {path: 'feedback', component: FeedbackComponent},
       {path: 'home', component: HomeComponent},

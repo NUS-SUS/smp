@@ -34,7 +34,7 @@ export class CampaignsService {
     return this.httpClient.delete<Campaign>(url,httpOptions);
   }
   public updateCampaign(campaign: Campaign): Observable<Campaign> {
-    const url = `${this.REST_API_SERVER}/campaign/`;
+    const url = `${this.REST_API_SERVER}/campaign`;
     return this.httpClient.put<Campaign>(url, campaign, httpOptions);
   }
   public addCampaign(campaign: Campaign): Observable<Campaign> {

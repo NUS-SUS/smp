@@ -112,21 +112,6 @@ export class CreateCampaignComponent implements OnInit {
         this.ref.detectChanges();
       }
     });
-    // this.campaign.TAGS = this.classificationsService.getTags(this.campaign.CATEGORY);
-    // this.ngZone.run(() => {
-    //   if (this.tags.length > 0) {
-    //     if (this.campaign.CATEGORY !== this.tags[0].PARENT) {
-    //       this.campaign.TAGS = [];
-    //     }
-    //     this.tags = [];
-    //   }
-    //   this.classifications.classifications.forEach((element) => {
-    //     if (element.TYPES === 'TAG' && element.PARENT === this.campaign.CATEGORY) {
-    //       this.tags.push(element);
-    //     }
-    //   });
-    //   this.ref.detectChanges();
-    // });
   }
 
 }
