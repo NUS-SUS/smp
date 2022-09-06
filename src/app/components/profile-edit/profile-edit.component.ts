@@ -179,8 +179,7 @@ export class ProfileEditComponent implements OnInit {
 
       this.getCategory();
       this.getTags();
-      console.log(this.categories);
-      console.log(this.tags);
+
       this.ref.detectChanges();
     })
   }

@@ -16,13 +16,11 @@ export class CampaignComponent implements OnInit {
     COMPANY_NAME: "000001"
   }
   constructor(private userService: UsersService, private router:Router, private campaignsService: CampaignsService) {
-    console.log();
   }
 
   ngOnInit(): void {
     this.campaignsService.getCampaigns().subscribe((data: any) => {
       this.campaigns = data.campaigns;
-      console.log(this.campaigns);
     });
     this.userService.getCurrentUser().subscribe(data => {
       this.user = data

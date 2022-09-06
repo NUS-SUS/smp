@@ -16,8 +16,6 @@ export class ViewCampaignComponent implements OnInit {
   ngOnInit(): void {
     this.email = "halimin@email.com"
     this.campaign = JSON.parse(localStorage.getItem('campaign'));
-    console.log(this.campaignsService.getCurrentCampaign());
-    console.log(JSON.parse(localStorage.getItem('campaign')))
   }
   
   checkEmail() {
@@ -45,7 +43,6 @@ export class ViewCampaignComponent implements OnInit {
     }
     this.campaignsService.updateCampaign(campaign).subscribe(data => {
       this.applied = true;
-      console.log(data);
     });
     this.ref.detectChanges();
   }

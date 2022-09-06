@@ -17,7 +17,6 @@ export class EditCampaignComponent implements OnInit {
 
   ngOnInit(): void {
     this.campaign = JSON.parse(localStorage.getItem('campaign'));
-    console.log(this.campaign);
   }
 
   updateCampaign() {

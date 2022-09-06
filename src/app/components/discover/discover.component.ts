@@ -20,7 +20,6 @@ export class DiscoverComponent implements OnInit {
   ngOnInit(): void {
     this.campaignsService.getCampaigns().subscribe((data: any) => {
       this.campaigns = data.campaigns;
-      console.log(this.campaigns);
       this.getCategoryList();
       this.search();
     })
@@ -38,7 +37,6 @@ export class DiscoverComponent implements OnInit {
     this.result = [];
     await this.campaigns.forEach((campaign: Campaign) => {
       if(campaign.STATUS === true) {
-        console.log(campaign.CATEGORY);
         if(this.category !== "" && this.category === campaign.CATEGORY && this.query !== "" && campaign.CAMPAIGN_NAME.toUpperCase().includes(this.query.toUpperCase())) {
           this.result.push(campaign);
         }

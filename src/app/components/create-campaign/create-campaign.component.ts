@@ -42,7 +42,6 @@ export class CreateCampaignComponent implements OnInit {
   refreshCampaigns() {
     this.campaignService.getCampaigns()
       .subscribe(data => {
-        console.log(data)
         this.campaigns = data;
       })
 
@@ -51,7 +50,6 @@ export class CreateCampaignComponent implements OnInit {
   getUsers() {
     this.userService.getCurrentUser().subscribe(data => {
       this.user = data
-      console.log(data);
       this.ref.detectChanges();
   })
   }
@@ -63,7 +61,6 @@ export class CreateCampaignComponent implements OnInit {
     this.user.CAMPAIGN_FUNDS = this.user.CAMPAIGN_FUNDS - 5;
     this.userService.updateUser(this.user).subscribe(data =>{
       this.user = data
-      console.log(data);
       this.ref.detectChanges();
     })
   }
@@ -75,7 +72,6 @@ export class CreateCampaignComponent implements OnInit {
     this.minusFunds();
     this.campaignService.addCampaign(this.campaign)
       .subscribe(data => {
-        console.log(data)
         this.refreshCampaigns();
         this.router.navigate(['/campaign']);
       })
@@ -106,17 +102,12 @@ export class CreateCampaignComponent implements OnInit {
   }
 
   getTags() {
-    // console.log(this.classificationsService.getTags(this.campaign.CATEGORY));
     var parentId : any = '';
     this.classifications.classifications.forEach((element) => {
-      console.log(element.VALUE);
-      console.log(this.campaign.CATEGORY);
-      console.log(element.VALUE === this.campaign.CATEGORY);
       if (element.VALUE === this.campaign.CATEGORY) {
         parentId = element.CLASSIFICATIONS_ID;
         this.classificationsService.getTags(parentId).subscribe((data: any) => {
           this.tags = data.classifications;
-          console.log(data);
         });
         this.ref.detectChanges();
       }

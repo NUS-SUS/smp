@@ -19,6 +19,7 @@ import { ViewCampaignComponent } from './components/view-campaign/view-campaign.
 import { CreateCampaignComponent } from './components/create-campaign/create-campaign.component';
 import { EditCampaignComponent } from './components/edit-campaign/edit-campaign.component';
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
+import { RedirectionComponent } from './components/redirection/redirection.component';
 
 
 
@@ -34,6 +35,7 @@ import { ProfileEditComponent } from './components/profile-edit/profile-edit.com
     CreateCampaignComponent,
     EditCampaignComponent,
     ProfileEditComponent,
+    RedirectionComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,7 +54,8 @@ import { ProfileEditComponent } from './components/profile-edit/profile-edit.com
       {path: 'view-campaign', component: ViewCampaignComponent},
       {path: 'create-campaign', component: CreateCampaignComponent},
       {path: 'edit-campaign', component: EditCampaignComponent},
-      {path: 'profile-edit', component: ProfileEditComponent}
+      {path: 'profile-edit', component: ProfileEditComponent},
+      {path: 'redirection', component: RedirectionComponent}
     ])
   ],
   providers: [],
