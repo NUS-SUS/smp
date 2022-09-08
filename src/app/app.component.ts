@@ -11,13 +11,31 @@ export class AppComponent {
   title = 'smp';
   isCompany: boolean;
   authState!: AuthState;
-  user: CognitoUserInterface | undefined;
   displayName: string;
   isInfluencer: boolean;
+  user: any = {
+    USER_TYPE: "Company",
+    COMPANY_NAME: "000001"
+  }
   
   constructor(private zone: NgZone, private ref: ChangeDetectorRef, private usersService: UsersService) { }
 
   ngOnInit() {
+    this.usersService.getCurrentUser().subscribe(data => {
+      this.user = data;
+      if (data.USER_TYPE === "Company") {
+        this.isCompany = true;
+        this.displayName = data.COMPANY_NAME;
+      } else {
+        this.isCompany = false;
+      }
+      if(data.USER_TYPE === "Influencer"){
+        this.isInfluencer = true;
+        this.displayName = data.FULL_NAME;
+      } else{
+        this.isInfluencer = false;
+      }
+    });
     onAuthUIStateChange((authState, authData) => {
       this.authState = authState;
       this.user = authData as CognitoUserInterface;
