@@ -20,6 +20,11 @@ import { CreateCampaignComponent } from './components/create-campaign/create-cam
 import { EditCampaignComponent } from './components/edit-campaign/edit-campaign.component';
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
 import { RedirectionComponent } from './components/redirection/redirection.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { NgxStripeModule } from 'ngx-stripe';
+import { CheckoutCancelComponent } from './components/checkout-cancel/checkout-cancel.component';
+import { CheckoutCompleteComponent } from './components/checkout-complete/checkout-complete.component';
+import { CheckoutSuccessComponent } from './components/checkout-success/checkout-success.component';
 
 
 
@@ -36,6 +41,7 @@ import { RedirectionComponent } from './components/redirection/redirection.compo
     EditCampaignComponent,
     ProfileEditComponent,
     RedirectionComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +51,7 @@ import { RedirectionComponent } from './components/redirection/redirection.compo
     FormsModule,
     ReactiveFormsModule,
     NgSelectModule,
+    NgxStripeModule.forRoot('***your-stripe-publishable-key***'),
     RouterModule.forRoot([
       {path: '', component: HomeComponent},
       {path: 'discover', component: DiscoverComponent},
@@ -56,7 +63,11 @@ import { RedirectionComponent } from './components/redirection/redirection.compo
       {path: 'create-campaign', component: CreateCampaignComponent},
       {path: 'edit-campaign', component: EditCampaignComponent},
       {path: 'profile-edit', component: ProfileEditComponent},
-      {path: 'redirection', component: RedirectionComponent}
+      {path: 'redirection', component: RedirectionComponent},
+      {path: 'checkout', component: CheckoutComponent},
+      {path: 'checkout-cancel', component: CheckoutCancelComponent},
+      {path: 'checkout-complete', component: CheckoutCompleteComponent},
+      {path: 'checkout-success', component: CheckoutSuccessComponent},
     ])
   ],
   providers: [],
