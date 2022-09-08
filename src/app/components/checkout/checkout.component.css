@@ -1,0 +1,15 @@
+h2.heading{
+    text-align: center;
+}
+div.top-up {
+    text-align: center;
+}
+button.credit{
+    background-color: #ff9900;
+    color: #ffffff;
+    margin: auto;
+    font-size: var(--amplify-text-sm);
+    font-family: var(--amplify-font-family);
+    font-weight: 600;
+    border-color: white;
+}
