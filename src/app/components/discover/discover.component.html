@@ -46,6 +46,8 @@
                                 <div class="result-body">
                                     <div class="table-responsive">
                                         <table class="table widget-26">
+                                            <caption>Campaigns Table</caption>
+                                            <th></th>
                                             <tbody>
                                                 <tr *ngFor="let campaign of result">
                                                     <td>
@@ -62,7 +64,7 @@
                                                     </td>
                                                     <td>
                                                         <div class="widget-26-job-category bg-soft-warning" *ngFor="let tag of campaign.TAGS">
-                                                            <i class="indicator bg-warning"></i>
+                                                            <em class="indicator bg-warning"></em>
                                                             <span>{{tag}}</span>
                                                         </div>
                                                     </td>
