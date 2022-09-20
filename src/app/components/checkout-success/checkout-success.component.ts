@@ -31,45 +31,60 @@ export class CheckoutSuccessComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.queryParams.pipe(
+  //   this.activatedRoute.queryParams.pipe(
+  //     switchMap((params: Params) => {
+  //       this.generateId = params['generateId'];
+  //       this.getCost(params['priceId']);
+  //       return this.usersService.getCurrentUser();
+  //     }),
+  //     switchMap((user: UserModel) => {
+  //       this.processPayment(user);
+  //       user.CAMPAIGN_FUNDS = parseInt(user.CAMPAIGN_FUNDS.toString()) + parseInt(this.cost.toString());
+  //       return this.usersService.updateUser(user);;
+  //     }),
+  //     switchMap((user: User) => {
+  //       return this.paymentService.addPayment(this.newPayment);
+  //     })
+  //   ).subscribe(payment => {
+  //     this.route.navigate(['checkout-complete'], { queryParams: { paymentId: payment.PAYMENTS_ID }});
+  //   });
+  // }
+  // private getCost(priceId: string){
+  //   switch(priceId){
+  //     case "price_1JeiMhIs1V0ZAkpPMGW7mEB2":
+  //       this.cost = 10;
+  //       break;
+  //     case "price_1JeiMhIs1V0ZAkpPxskv5c5Z":
+  //       this.cost = 50;
+  //       break;
+  //     case "price_1JeiMhIs1V0ZAkpP1et67ana":
+  //       this.cost = 100;
+  //       break;
+  //   }
+  // } 
+  // private processPayment(user: User) {
+  //   this.newPayment = new PaymentModel();
+  //   this.newPayment.PAYMENTS_ID = this.generateId;
+  //   this.newPayment.AMOUNT = this.cost;
+  //   this.newPayment.CAMPAIGN_FUNDS_PURCHASED = this.cost;
+  //   this.newPayment.COMPANIES_ID = user.EMAIL;
+  //   this.newPayment.PAYMENT_STATUS = "Success";
+  //   this.newPayment.PAYMENT_TYPE = "Stripe";
+  //   this.newPayment.TRANSACTION_ID = this.generateId;
+  // };
+      this.activatedRoute.queryParams.pipe(
       switchMap((params: Params) => {
         this.generateId = params['generateId'];
-        this.getCost(params['priceId']);
-        return this.usersService.getCurrentUser();
-      }),
-      switchMap((user: UserModel) => {
-        this.processPayment(user);
-        user.CAMPAIGN_FUNDS = parseInt(user.CAMPAIGN_FUNDS.toString()) + parseInt(this.cost.toString());
-        return this.usersService.updateUser(user);
-      }),
-      switchMap((user: User) => {
-        return this.paymentService.addPayment(this.newPayment);
+        return this.paymentService.getPayment(this.generateId);
       })
     ).subscribe(payment => {
-      this.route.navigate(['checkout-complete'], { queryParams: { paymentId: payment.PAYMENTS_ID }});
+      setTimeout(()=>{
+        if(payment.PAYMENTS_ID){
+          this.route.navigate(['checkout-complete'], { queryParams: { paymentId: payment.PAYMENTS_ID }});
+        }else{
+          this.route.navigate(['checkout-cancel']);
+        }
+      }, 3000);  
     });
-  }
-  private getCost(priceId: string){
-    switch(priceId){
-      case "price_1JeiMhIs1V0ZAkpPMGW7mEB2":
-        this.cost = 10;
-        break;
-      case "price_1JeiMhIs1V0ZAkpPxskv5c5Z":
-        this.cost = 50;
-        break;
-      case "price_1JeiMhIs1V0ZAkpP1et67ana":
-        this.cost = 100;
-        break;
-    }
-  } 
-  private processPayment(user: User) {
-    this.newPayment = new PaymentModel();
-    this.newPayment.PAYMENTS_ID = this.generateId;
-    this.newPayment.AMOUNT = this.cost;
-    this.newPayment.CAMPAIGN_FUNDS_PURCHASED = this.cost;
-    this.newPayment.COMPANIES_ID = user.EMAIL;
-    this.newPayment.PAYMENT_STATUS = "Success";
-    this.newPayment.PAYMENT_TYPE = "Stripe";
-    this.newPayment.TRANSACTION_ID = this.generateId;
   }
 }
