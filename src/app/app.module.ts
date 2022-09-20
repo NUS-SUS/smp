@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgSelectModule, NgOption } from '@ng-select/ng-select';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { AppComponent } from './app.component';
 import { DiscoverComponent } from './components/discover/discover.component';
@@ -22,7 +22,6 @@ import { ProfileEditComponent } from './components/profile-edit/profile-edit.com
 import { RedirectionComponent } from './components/redirection/redirection.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { NgxStripeModule } from 'ngx-stripe';
-import { CheckoutCancelComponent } from './components/checkout-cancel/checkout-cancel.component';
 import { CheckoutCompleteComponent } from './components/checkout-complete/checkout-complete.component';
 import { CheckoutSuccessComponent } from './components/checkout-success/checkout-success.component';
 
@@ -65,7 +64,6 @@ import { CheckoutSuccessComponent } from './components/checkout-success/checkout
       {path: 'profile-edit', component: ProfileEditComponent},
       {path: 'redirection', component: RedirectionComponent},
       {path: 'checkout', component: CheckoutComponent},
-      {path: 'checkout-cancel', component: CheckoutCancelComponent},
       {path: 'checkout-complete', component: CheckoutCompleteComponent},
       {path: 'checkout-success', component: CheckoutSuccessComponent},
     ])

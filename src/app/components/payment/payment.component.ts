@@ -9,8 +9,6 @@ export class PaymentComponent implements OnInit {
 
   paymentHandler:any = null;
 
-  constructor() { }
-
   ngOnInit() {
     this.invokeStripe();
   }

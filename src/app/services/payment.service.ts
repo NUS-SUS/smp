@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
-import { Observable, of } from 'rxjs';
-import { Payment, PaymentModel } from '../interfaces/Payment';
+import { Observable } from 'rxjs';
+import { Payment } from '../interfaces/Payment';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -21,7 +21,6 @@ export class PaymentService {
   }
   
   public getPayments(): Observable<Payment[]> {
-    const url = `${this.REST_API_SERVER}/payments`;
     return this.httpClient.get<Payment[]>(this.REST_API_SERVER,httpOptions);
   }
 

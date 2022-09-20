@@ -25,25 +25,21 @@ export class DiscoverComponent implements OnInit {
     })
   }
 
-  async getCategoryList() {
-    await this.campaigns.forEach((campaign: Campaign) => {
+  getCategoryList() {
+    this.campaigns.forEach((campaign: Campaign) => {
       if((!this.categoryList.includes(campaign.CATEGORY)) && campaign.STATUS === true){
         this.categoryList.push(campaign.CATEGORY);
       }
     })
   }
 
-  async search() {
+  search() {
     this.result = [];
-    await this.campaigns.forEach((campaign: Campaign) => {
+    this.campaigns.forEach((campaign: Campaign) => {
       if(campaign.STATUS === true) {
-        if(this.category !== "" && this.category === campaign.CATEGORY && this.query !== "" && campaign.CAMPAIGN_NAME.toUpperCase().includes(this.query.toUpperCase())) {
-          this.result.push(campaign);
-        }
-        else if(this.category !== "" && this.category === campaign.CATEGORY && this.query === "") {
-          this.result.push(campaign);
-        }
-        else if(this.category === "" && this.query === "") {
+        if((this.category !== "" && this.category === campaign.CATEGORY && this.query !== "" && campaign.CAMPAIGN_NAME.toUpperCase().includes(this.query.toUpperCase())) ||
+        (this.category !== "" && this.category === campaign.CATEGORY && this.query === "") ||
+        (this.category === "" && this.query === "")) {
           this.result.push(campaign);
         }
       }

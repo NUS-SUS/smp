@@ -40,7 +40,7 @@ export class CheckoutSuccessComponent implements OnInit {
       switchMap((user: UserModel) => {
         this.processPayment(user);
         user.CAMPAIGN_FUNDS = parseInt(user.CAMPAIGN_FUNDS.toString()) + parseInt(this.cost.toString());
-        return this.usersService.updateUser(user);;
+        return this.usersService.updateUser(user);
       }),
       switchMap((user: User) => {
         return this.paymentService.addPayment(this.newPayment);
@@ -71,5 +71,5 @@ export class CheckoutSuccessComponent implements OnInit {
     this.newPayment.PAYMENT_STATUS = "Success";
     this.newPayment.PAYMENT_TYPE = "Stripe";
     this.newPayment.TRANSACTION_ID = this.generateId;
-  };
+  }
 }
