@@ -4,6 +4,7 @@ import { switchMap } from 'rxjs/operators';
 import { UsersService } from '../../services/users.service';
 import { StripeService } from 'ngx-stripe';
 import { User } from '../../interfaces/User';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -20,12 +21,13 @@ export class CheckoutComponent {
     private usersService: UsersService,
   ) {
     this.usersService.getCurrentUser().subscribe(user => this.user = user);
+    this.stripeService.setKey(environment.STRIPE_KEY);
   }
-
+  
 
   checkout(priceId) {
     const generateId = Date.now().toString();
-
+    //this.stripeService.setKey("pk_test_51Lf1vhKeqC5GsAgqJPXct0k3qE2BHBegOictCp0vM9nSR9CUGcLz2zB2wVFHEnhQJKJih3yDla1VeNbWZUQv3nCA005eGX0OiI");
     this.stripeService.redirectToCheckout({
       lineItems: [{
         price: priceId,
