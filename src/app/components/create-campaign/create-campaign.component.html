@@ -10,30 +10,18 @@
                                 <label for="name">Campaign Name:</label>
                                 <input type="text" class="form-control" id="name" required
                                     [(ngModel)]="campaign.CAMPAIGN_NAME" name="name">
-                                <!-- <input type="text" class="form-control" id="name" required [(ngModel)]="model.name" name="name" #name="ngModel"> -->
                             </div><br>
                             <div class="form-group">
                                 <label for="Descriptions">Campaign Description:</label>
                                 <input type="text" class="form-control" id="Descriptions" required
                                     [(ngModel)]="campaign.DESCRIPTION" name="Descriptions">
                             </div><br>
-                            <!-- <div class="form-group">
-                                <label for="Tags">Tags</label>
-                                <input type="text" class="form-control" id="Tags" required [(ngModel)]="campaign.TAGS"
-                                    name="Tags">
-                            </div><br>
-                            <div class="form-group">
-                                <label for="Category">Category</label>
-                                <input type="text" class="form-control" id="Category" required
-                                    [(ngModel)]="campaign.CATEGORY" name="Category">
-                            </div><br> -->
 
                             <div class="form-group">
                                 <label for="Category">Category</label>
-                                <ng-select (change)="getTags()" class="form-control" [items]="categories"
-                                    bindLabel="VALUE" bindValue="VALUE" required [(ngModel)]="campaign.CATEGORY"
-                                    name="Category">
-                                </ng-select>
+                                <ng-select (change)="getTags()" class="form-control" [(ngModel)]="campaign.CATEGORY" name="category">
+                                    <ng-option *ngFor="let category of categories" [value]="category.VALUE">{{category.VALUE}}</ng-option>
+                                 </ng-select>
                             </div><br>
 
                             <div class="form-group">

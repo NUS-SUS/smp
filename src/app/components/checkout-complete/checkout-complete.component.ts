@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PaymentService } from '../../services/payment.service';
-import { Payment, PaymentModel } from '../../interfaces/Payment';
+import { Payment } from '../../interfaces/Payment';
 import { UsersService } from '../../services/users.service';
-import { User, UserModel } from '../../interfaces/User';
+import { UserModel } from '../../interfaces/User';
 import { ActivatedRoute,Router, Params } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Location } from "@angular/common"; 

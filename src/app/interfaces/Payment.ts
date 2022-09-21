@@ -16,6 +16,4 @@ export class PaymentModel implements Payment {
     AMOUNT: number;
     CAMPAIGN_FUNDS_PURCHASED: number;
     PAYMENT_STATUS: string;
-    constructor() {
-    }
 }

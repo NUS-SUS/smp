@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { switchMap } from 'rxjs/operators';
 import { UsersService } from '../../services/users.service';
 import { StripeService } from 'ngx-stripe';
 import { User } from '../../interfaces/User';

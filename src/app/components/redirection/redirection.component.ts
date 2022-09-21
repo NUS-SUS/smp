@@ -25,17 +25,14 @@ export class RedirectionComponent implements OnInit {
           this.routeValue = "/profile-edit";
           this.route.navigate([this.routeValue]);
         }
-        switch (user.USER_TYPE) {
-          case null:
+        if (user.USER_TYPE == null) {
             this.routeValue = "/profile-edit";
             this.ngZone.run(() => {
               this.route.navigate([this.routeValue]);
-            });           
-            break;
-          default:
+            })          
+        } else {
             this.routeValue = "/home";
             this.route.navigate([this.routeValue]);
-            break;
         }
       }else{
           this.routeValue = "/profile-edit";
@@ -50,11 +47,6 @@ export class RedirectionComponent implements OnInit {
       }); 
     });
   }
-
-  evaluate(): void {
-
-  }
-
 
 
 }

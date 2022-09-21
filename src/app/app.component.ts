@@ -13,10 +13,7 @@ export class AppComponent {
   authState!: AuthState;
   displayName: string;
   isInfluencer: boolean;
-  user: any = {
-    USER_TYPE: "Company",
-    COMPANY_NAME: "000001"
-  }
+  user: any;
   
   constructor(private zone: NgZone, private ref: ChangeDetectorRef, private usersService: UsersService) { }
 
