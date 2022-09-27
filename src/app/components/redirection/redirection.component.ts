@@ -40,12 +40,7 @@ export class RedirectionComponent implements OnInit {
             this.route.navigate([this.routeValue]);
           }); 
       }
-    }, (error) => {
-      this.routeValue = "/profile-edit";
-      this.ngZone.run(() => {
-        this.route.navigate([this.routeValue]);
-      }); 
-    });
+    })
   }
 
 

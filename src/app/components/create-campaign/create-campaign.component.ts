@@ -1,6 +1,7 @@
-import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Campaign } from 'src/app/interfaces/Campaign';
+import { Classification } from 'src/app/interfaces/Classification';
 import { UserModel } from 'src/app/interfaces/User';
 import { CampaignsService } from 'src/app/services/campaigns.service';
 import { ClassificationsService } from 'src/app/services/classifications.service';
@@ -13,37 +14,24 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class CreateCampaignComponent implements OnInit {
   title = 'Create Campaign';
-  campaigns: Campaign[];
-  campaign = new Campaign();
-  classifications: any = { classifications: [] };
-  tags: any[] = [];
-  categories: any[] = [];
+  campaign: Campaign = new Campaign();
+  tags: Classification[] = [];
+  categories: Classification[] = [];
   user: UserModel = {};
-  constructor(private campaignService: CampaignsService, public router: Router, private ref: ChangeDetectorRef, private ngZone: NgZone, 
+  constructor( private usersService: UsersService, private campaignService: CampaignsService, public router: Router, private ref: ChangeDetectorRef, 
     private classificationsService: ClassificationsService,private userService: UsersService) { }
 
   ngOnInit(): void {
+    this.usersService.getCurrentUser().subscribe((data) => {
+      if(data == null){
+        this.router.navigate(["/profile-edit"]);
+      } else {
+        this.user = data;
+      }
+      this.ref.detectChanges();
+    });
     this.getCategory();
-    this.refreshCampaigns();
     this.getUsers();
-    this.campaign.CAMPAIGNS_ID = '';
-    this.campaign.CAMPAIGN_NAME = '';
-    this.campaign.CATEGORY = '';
-    this.campaign.TAGS = [];
-    this.campaign.COMPANIES_ID = '';
-    this.campaign.DESCRIPTION = '';
-    this.campaign.START_DATE = null;
-    this.campaign.END_DATE = null;
-    this.campaign.VENUE = '';
-    this.campaign.STATUS = true;
-  }
-
-  refreshCampaigns() {
-    this.campaignService.getCampaigns()
-      .subscribe(data => {
-        this.campaigns = data;
-      })
-
   }
 
   getUsers() {
@@ -68,10 +56,11 @@ export class CreateCampaignComponent implements OnInit {
     const generateId = Date.now().toString();
     this.campaign.CAMPAIGNS_ID = generateId;
     this.campaign.COMPANIES_ID = this.user.COMPANY_NAME;
-    this.minusFunds();
+    this.campaign.STATUS = true;
+    this.campaign.APPLIED = [];
     this.campaignService.addCampaign(this.campaign)
-      .subscribe(data => {
-        this.refreshCampaigns();
+      .subscribe(() => {
+        this.minusFunds();
         this.router.navigate(['/campaign']);
       })
   }

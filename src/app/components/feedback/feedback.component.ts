@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { FeedbackModel } from 'src/app/interfaces/Feedback';
 import { User } from 'src/app/interfaces/User';
@@ -18,11 +19,17 @@ export class FeedbackComponent implements OnInit {
     private usersService: UsersService,
     private feedbacksService: FeedbacksService,
     private datePipe: DatePipe,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    console.log("In Feedback")
+    this.usersService.getCurrentUser().subscribe((data) => {
+      if(data == null){
+        this.router.navigate(["/profile-edit"]);
+      }
+      this.ref.detectChanges();
+    });
   }
 
   onSubmit() {

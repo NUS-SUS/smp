@@ -33,7 +33,7 @@
                 <h5 class="mb-0">Descriptions</h5>
               </div>
               <div class="col-sm-9 text-secondary my-auto">
-                {{campaign.DESCRIPTIONS}}
+                {{campaign.DESCRIPTION}}
               </div>
             </div>
             <hr>
@@ -87,6 +87,7 @@
             <hr>
             &nbsp;
           </div>
+          <div *ngIf="user.USER_TYPE ==='Company'">
           <div class="card-body" *ngIf="(campaign.STATUS == true)&&(user.USER_TYPE ==='Company')&&(user.COMPANY_NAME === campaign.COMPANIES_ID)">
             <div class="row h-100">
               <div class="col-sm-3 my-auto">
@@ -169,6 +170,7 @@
                 Campaign</button>&nbsp;
             </nav><br>
           </div>
+          <div>
 
 
 

@@ -1,7 +1,8 @@
-import { Component, OnInit, ChangeDetectorRef, NgZone } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Campaign } from 'src/app/interfaces/Campaign';
 import { CampaignsService } from 'src/app/services/campaigns.service';
 import { Router } from '@angular/router';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-discover',
@@ -10,14 +11,20 @@ import { Router } from '@angular/router';
 })
 export class DiscoverComponent implements OnInit {
   selectedCampaign: any;
-  campaigns: any[] = null;
+  campaigns: Campaign[] = null;
   result: Campaign[] = [];
   query : string = "";
   category: string = "";
   categoryList: string[] = [];
-  constructor(private router : Router, private campaignsService: CampaignsService, private ref: ChangeDetectorRef, private ngZone: NgZone) { }
+  constructor(private router : Router, private campaignsService: CampaignsService, private ref: ChangeDetectorRef, private usersService: UsersService) { }
 
   ngOnInit(): void {
+    this.usersService.getCurrentUser().subscribe((data) => {
+      if(data == null){
+        this.router.navigate(["/profile-edit"]);
+      }
+      this.ref.detectChanges();
+    });
     this.campaignsService.getCampaigns().subscribe((data: any) => {
       this.campaigns = data.campaigns;
       this.getCategoryList();

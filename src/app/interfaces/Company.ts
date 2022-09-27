@@ -9,7 +9,6 @@ export interface Company extends User {
     STREET_NAME?: string;
     UNIT_NUMBER?: string;
     VERIFIED?: boolean;
-
     CAMPAIGN_FUNDS?: number;
     COMPANY_NAME?: string;
     USER_TYPE?: string;
@@ -24,7 +23,6 @@ export class CompanyModel implements Company{
     STREET_NAME?: string;
     UNIT_NUMBER?: string;
     VERIFIED?: boolean;
-
     CAMPAIGN_FUNDS?: number;
     COMPANY_NAME?: string;
     USER_TYPE?: string;

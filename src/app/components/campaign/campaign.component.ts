@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Campaign } from 'src/app/interfaces/Campaign';
+import { UserModel } from 'src/app/interfaces/User';
 import { CampaignsService } from 'src/app/services/campaigns.service';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -10,20 +11,22 @@ import { UsersService } from 'src/app/services/users.service';
   styleUrls: ['./campaign.component.css']
 })
 export class CampaignComponent implements OnInit {
-  campaigns: any[] = [];
-  user: any = {
-    USER_TYPE: "Company",
-    COMPANY_NAME: "000001"
-  }
-  constructor(private userService: UsersService, private router:Router, private campaignsService: CampaignsService) {
+  campaigns: Campaign[] = [];
+  user: UserModel = {};
+  constructor(private ref: ChangeDetectorRef, private usersService: UsersService, private router:Router, private campaignsService: CampaignsService) {
   }
 
   ngOnInit(): void {
+    this.usersService.getCurrentUser().subscribe((data) => {
+      if(data == null){
+        this.router.navigate(["/profile-edit"]);
+      } else {
+        this.user = data;
+      }
+      this.ref.detectChanges();
+    });
     this.campaignsService.getCampaigns().subscribe((data: any) => {
       this.campaigns = data.campaigns;
-    });
-    this.userService.getCurrentUser().subscribe(data => {
-      this.user = data
     });
   }
 

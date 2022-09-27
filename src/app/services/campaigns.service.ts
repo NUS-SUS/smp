@@ -14,8 +14,6 @@ const httpOptions = {
 export class CampaignsService {
   private currentCampaign: Campaign;
 
-  // baseURL: string = "http://localhost:3000/";
-  // private REST_API_SERVER = "http://localhost:3000";
   private REST_API_SERVER = "https://xue2n1beqj.execute-api.ap-southeast-1.amazonaws.com/nussmp";
 
   constructor(private httpClient: HttpClient) { }

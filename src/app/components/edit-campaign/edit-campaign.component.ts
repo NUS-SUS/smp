@@ -1,6 +1,7 @@
-import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Campaign } from 'src/app/interfaces/Campaign';
+import { Classification } from 'src/app/interfaces/Classification';
 import { CampaignsService } from 'src/app/services/campaigns.service';
 import { ClassificationsService } from 'src/app/services/classifications.service';
 
@@ -10,11 +11,11 @@ import { ClassificationsService } from 'src/app/services/classifications.service
   styleUrls: ['./edit-campaign.component.css']
 })
 export class EditCampaignComponent implements OnInit {
-  campaign: Campaign = null;
-  categories: any[] = [];
-  tags: any[] = [];
+  campaign: Campaign;
+  categories: Classification[] = [];
+  tags: Classification[] = [];
   classifications: any = { classifications: [] };
-  constructor(private ngZone: NgZone, private campaignsService: CampaignsService, private router: Router, private classificationsService: ClassificationsService, private ref: ChangeDetectorRef) { }
+  constructor(private campaignsService: CampaignsService, private router: Router, private classificationsService: ClassificationsService, private ref: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.getCategory();
@@ -47,7 +48,6 @@ export class EditCampaignComponent implements OnInit {
      }
      this.ref.detectChanges();
     })
-    console.log(this.categories);
    }
  
    getTags() {
