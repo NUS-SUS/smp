@@ -20,7 +20,7 @@ export class CheckoutComponent {
     private usersService: UsersService,
   ) {
     this.usersService.getCurrentUser().subscribe(user => this.user = user);
-    this.stripeService.setKey(environment.STRIPE_KEY);
+    this.stripeService.setKey("pk_test_51Lf1vhKeqC5GsAgqJPXct0k3qE2BHBegOictCp0vM9nSR9CUGcLz2zB2wVFHEnhQJKJih3yDla1VeNbWZUQv3nCA005eGX0OiI");
   }
   
 
