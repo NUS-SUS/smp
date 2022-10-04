@@ -31,14 +31,6 @@ export class CreateCampaignComponent implements OnInit {
       this.ref.detectChanges();
     });
     this.getCategory();
-    this.getUsers();
-  }
-
-  getUsers() {
-    this.userService.getCurrentUser().subscribe(data => {
-      this.user = data
-      this.ref.detectChanges();
-  })
   }
 
   navigateToFunds(){

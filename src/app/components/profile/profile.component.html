@@ -4,13 +4,16 @@
       <div class="col-md-12">
         <div *ngIf="!user">Loading</div>
         <div class="card mb-3" *ngIf="user">
-          <div class="card-body" *ngIf="user.USER_TYPE==='Company'">
+          <div class="card-body">
             <div class="row h-100">
               <div class="col-sm-3 my-auto">
                 <h6 class="mb-0">Name</h6>
               </div>
               <div class="col-sm-9 text-secondary my-auto">
-                <span>{{user.COMPANY_NAME}}
+                <span *ngIf="user.USER_TYPE==='Influencer'">{{user.FULL_NAME}}
+                  <em placement="right" ngbTooltip="Verified" i-bs name="patch-check"></em>
+                </span>
+                <span *ngIf="user.USER_TYPE==='Company'">{{user.COMPANY_NAME}}
                   <em placement="right" ngbTooltip="Verified" i-bs name="patch-check"></em>
                 </span>
               </div>
@@ -25,106 +28,7 @@
               </div>
             </div>
             <hr>
-            <div class="row h-100">
-              <div class="col-sm-3 my-auto">
-                <h6 class="mb-0">Campaign Funds</h6>
-              </div>
-              <div class="col-sm-9 text-secondary my-auto">
-                {{user.CAMPAIGN_FUNDS}}
-              </div>
-            </div>
-            <hr>
-            <div class="row h-100">
-              <div class="col-sm-3 my-auto">
-                <h6 class="mb-0">Email</h6>
-              </div>
-              <div class="col-sm-9 text-secondary my-auto">
-                {{user.EMAIL}}
-              </div>
-            </div>
-            <hr>
-            <div class="row h-100">
-              <div class="col-sm-3 my-auto">
-                <h6 class="mb-0">Account Type</h6>
-              </div>
-              <div class="col-sm-9 text-secondary my-auto">
-                {{user.USER_TYPE}}
-              </div>
-            </div>
-            <hr>
-            <div class="row h-100">
-              <div class="col-sm-3 my-auto">
-                <h6 class="mb-0">Contact Number</h6>
-              </div>
-              <div class="col-sm-9 text-secondary my-auto">
-                {{user.CONTACT_NUMBER}}
-              </div>
-            </div>
-            <hr>
-            <div class="row h-100">
-              <div class="col-sm-3 my-auto">
-                <h6 class="mb-0">Block Number</h6>
-              </div>
-              <div class="col-sm-9 text-secondary my-auto">
-                {{user.BLOCK_NUMBER}}
-              </div>
-            </div>
-            <hr>
-            <div class="row h-100">
-              <div class="col-sm-3 my-auto">
-                <h6 class="mb-0">Street Name</h6>
-              </div>
-              <div class="col-sm-9 text-secondary my-auto">
-                {{user.STREET_NAME}}
-              </div>
-            </div>
-            <hr>
-            <div class="row h-100">
-              <div class="col-sm-3 my-auto">
-                <h6 class="mb-0">Unit Number</h6>
-              </div>
-              <div class="col-sm-9 text-secondary my-auto">
-                {{user.UNIT_NUMBER}}
-              </div>
-            </div>
-            <hr>
-            <div class="row h-100">
-              <div class="col-sm-3 my-auto">
-                <h6 class="mb-0">Postal Code</h6>
-              </div>
-              <div class="col-sm-9 text-secondary my-auto">
-                {{user.POSTAL_CODE}}
-              </div>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-12">
-                <a class="btn btn-success" style="float: right;" [routerLink]="['/profile-edit']">Edit</a>
-              </div>
-            </div>
-          </div>
-          <div class="card-body" *ngIf="user.USER_TYPE==='Influencer'">
-            <div class="row h-100">
-              <div class="col-sm-3 my-auto">
-                <h6 class="mb-0">Name</h6>
-              </div>
-              <div class="col-sm-9 text-secondary my-auto">
-                <span>{{user.FULL_NAME}}
-                  <em placement="right" ngbTooltip="Verified" i-bs name="patch-check"></em>
-                </span>
-              </div>
-            </div>
-            <hr>
-            <div class="row h-100">
-              <div class="col-sm-3 my-auto">
-                <h6 class="mb-0">Nationality</h6>
-              </div>
-              <div class="col-sm-9 text-secondary my-auto">
-                {{user.NATIONALITY}}
-              </div>
-            </div>
-            <hr>
-            <div class="row h-100">
+            <div class="row h-100" *ngIf="user.USER_TYPE==='Influencer'">
               <div class="col-sm-3 my-auto">
                 <h6 class="mb-0">Category</h6>
               </div>
@@ -132,8 +36,17 @@
                 {{user.CATEGORY}}
               </div>
             </div>
-            <hr>
-            <div class="row h-100">
+            <hr *ngIf="user.USER_TYPE==='Influencer'">
+            <div class="row h-100" *ngIf="user.USER_TYPE==='Company'">
+              <div class="col-sm-3 my-auto">
+                <h6 class="mb-0">Campaign Funds</h6>
+              </div>
+              <div class="col-sm-9 text-secondary my-auto">
+                {{user.CAMPAIGN_FUNDS}}
+              </div>
+            </div>
+            <hr *ngIf="user.USER_TYPE==='Company'">
+            <div class="row h-100" *ngIf="user.USER_TYPE==='Influencer'">
               <div class="col-sm-3 my-auto">
                 <h6 class="mb-0">Tags</h6>
               </div>
@@ -144,7 +57,7 @@
                 </div>
               </div>
             </div>
-            <hr>
+            <hr *ngIf="user.USER_TYPE==='Influencer'">
             <div class="row h-100">
               <div class="col-sm-3 my-auto">
                 <h6 class="mb-0">Email</h6>
@@ -163,7 +76,7 @@
               </div>
             </div>
             <hr>
-            <div class="row h-100">
+            <div class="row h-100" *ngIf="user.USER_TYPE==='Influencer'">
               <div class="col-sm-3 my-auto">
                 <h6 class="mb-0">Birth Date</h6>
               </div>
@@ -171,8 +84,8 @@
                 {{user.BIRTHDATE}}
               </div>
             </div>
-            <hr>
-            <div class="row h-100">
+            <hr *ngIf="user.USER_TYPE==='Influencer'">
+            <div class="row h-100" *ngIf="user.USER_TYPE==='Influencer'">
               <div class="col-sm-3 my-auto">
                 <h6 class="mb-0">Laguange</h6>
               </div>
@@ -183,8 +96,8 @@
                 </div>
               </div>
             </div>
-            <hr>
-            <div class="row h-100">
+            <hr *ngIf="user.USER_TYPE==='Influencer'">
+            <div class="row h-100" *ngIf="user.USER_TYPE==='Influencer'">
               <div class="col-sm-3 my-auto">
                 <h6 class="mb-0">Social Media</h6>
               </div>
@@ -192,7 +105,7 @@
                 {{user.SOCIAL_MEDIA}}
               </div>
             </div>
-            <hr>
+            <hr *ngIf="user.USER_TYPE==='Influencer'">
             <div class="row h-100">
               <div class="col-sm-3 my-auto">
                 <h6 class="mb-0">Contact Number</h6>

@@ -87,7 +87,7 @@
                                 <div class="form-group">
                                     <a class="btn btn-secondary" style="float: left;"
                                         [routerLink]="['/discover']">Back</a>
-                                    <button [disabled]="applied === true" class="btn btn-success" style="float: right;"
+                                    <button *ngIf="showApply === true" [disabled]="applied === true" class="btn btn-success" style="float: right;"
                                         (click)="applyCampaign()" name="apply">Apply</button>
                                 </div>
                             </div>

@@ -15,6 +15,7 @@ export class ViewCampaignComponent implements OnInit {
   campaign: Campaign;
   applied: boolean = false;
   user: User;
+  showApply: boolean = false;
   constructor(private router: Router, private usersService: UsersService, private campaignsService: CampaignsService, private ref: ChangeDetectorRef) { }
 
   ngOnInit(): void {
@@ -24,11 +25,19 @@ export class ViewCampaignComponent implements OnInit {
       } else {
         this.user = data;
         this.campaign = JSON.parse(localStorage.getItem('campaign'));
-        console.log(this.campaign);
         this.checkEmail();
+        this.checkInfluencer();
       }
       this.ref.detectChanges();
     });
+  }
+
+  checkInfluencer() {
+    if(this.user.USER_TYPE == "Influencer") {
+      this.showApply = true; 
+    } else {
+      this.showApply = false; 
+    }
   }
   
   checkEmail() {
