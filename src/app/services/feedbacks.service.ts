@@ -30,7 +30,7 @@ export class FeedbacksService {
   }
 
   public deleteFeedback(feedback: Feedback): Observable<Feedback> {
-    const url = `${this.REST_API_SERVER}/feedback?FEEDBACKS_ID=${feedback.FEEDBACKS_ID}`;
+    const url = `${this.REST_API_SERVER}/feedback?FEEDBACKS_ID=${feedback.FEEDBACK_ID}`;
     return this.httpClient.delete<Feedback>(url, httpOptions);
   }
   public updateFeedback(feedback: Feedback): Observable<Feedback> {
