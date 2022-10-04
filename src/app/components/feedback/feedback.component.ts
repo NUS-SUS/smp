@@ -1,36 +1,26 @@
-import { DatePipe } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { switchMap } from 'rxjs';
+import { Component,ChangeDetectorRef } from '@angular/core';
+import { UsersService } from '../../services/users.service';
+import { FeedbacksService } from '../../services/feedbacks.service';
+import { User } from '../../interfaces/User';
 import { FeedbackModel } from 'src/app/interfaces/Feedback';
-import { User } from 'src/app/interfaces/User';
-import { FeedbacksService } from 'src/app/services/feedbacks.service';
-import { UsersService } from 'src/app/services/users.service';
+import { DatePipe } from '@angular/common';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-feedback',
   templateUrl: './feedback.component.html',
-  styleUrls: ['./feedback.component.css']
+  styleUrls: ['./feedback.component.css'],
+  providers: [DatePipe]
 })
-export class FeedbackComponent implements OnInit {
+export class FeedbackComponent {
   text: string;
   banner:boolean;
   constructor(
     private usersService: UsersService,
     private feedbacksService: FeedbacksService,
     private datePipe: DatePipe,
-    private ref: ChangeDetectorRef,
-    private router: Router
+    private ref: ChangeDetectorRef
   ) { }
-
-  ngOnInit(): void {
-    this.usersService.getCurrentUser().subscribe((data) => {
-      if(data == null){
-        this.router.navigate(["/profile-edit"]);
-      }
-      this.ref.detectChanges();
-    });
-  }
 
   onSubmit() {
     if (!this.text) {
@@ -48,7 +38,7 @@ export class FeedbackComponent implements OnInit {
         }
         return this.feedbacksService.addFeedback(fb);
       })
-      ).subscribe(x=>{
+      ).subscribe(()=>{
         this.banner=true;
         this.text='';
         this.ref.detectChanges();
