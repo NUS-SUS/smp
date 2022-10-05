@@ -37,7 +37,6 @@ export class AppComponent {
       this.authState = authState;
       this.user = authData as CognitoUserInterface;
       this.usersService.getCurrentUser().subscribe((data: any) => {
-        console.log(data.USER_TYPE);
         if (data.USER_TYPE === "Company") {
           this.isCompany = true;
           this.displayName = data.COMPANY_NAME;
