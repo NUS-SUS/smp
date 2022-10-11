@@ -6,6 +6,7 @@ import { switchMap,catchError } from 'rxjs/operators';
 import { Influencer } from '../interfaces/Influencer';
 import { InfluencersService } from './influencers.service';
 import { CompaniesService } from './companies.service';
+import { AuthenticatorService } from '@aws-amplify/ui-angular';
 
 
 @Injectable({
@@ -13,10 +14,12 @@ import { CompaniesService } from './companies.service';
 })
 export class UsersService {
   private currentUser: User;
+  private token: any;
 
   constructor(
     private influencersService: InfluencersService,
-    private companiesService: CompaniesService) {
+    private companiesService: CompaniesService,
+    public authenticator: AuthenticatorService) {
   }
 
   public getUser(email: string): Observable<UserModel> {
@@ -70,14 +73,11 @@ export class UsersService {
 
 
   private getCurrentUserPromise = async () => {
-    if (this.currentUser) {
-      return this.currentUser;
-    } else {
       const user = await Auth.currentAuthenticatedUser();
       const { attributes } = user;
       this.currentUser = new UserModel(attributes.email);
+      this.token = user.signInUserSession.idToken.jwtToken;
       return this.currentUser;
-    }
   };
   public getCurrentUser(): Observable<UserModel> {
     return from(this.getCurrentUserPromise.apply(null)).pipe(
@@ -97,6 +97,14 @@ export class UsersService {
       user = {...input};
     }
     return user;
+  }
+
+  public getUserToken() {
+    return this.token;
+  }
+
+  public userLoggedOut() {
+    this.authenticator.signOut();
   }
 
 }

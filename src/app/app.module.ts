@@ -5,7 +5,7 @@ import { AmplifyAuthenticatorModule } from '@aws-amplify/ui-angular';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 
@@ -24,6 +24,7 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { NgxStripeModule } from 'ngx-stripe';
 import { CheckoutCompleteComponent } from './components/checkout-complete/checkout-complete.component';
 import { CheckoutSuccessComponent } from './components/checkout-success/checkout-success.component';
+import { InterceptorService } from './services/interceptor.service';
 
 
 
@@ -68,7 +69,13 @@ import { CheckoutSuccessComponent } from './components/checkout-success/checkout
       {path: 'checkout-success', component: CheckoutSuccessComponent},
     ])
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

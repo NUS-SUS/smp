@@ -1,10 +1,11 @@
-import { Component,ChangeDetectorRef } from '@angular/core';
+import { Component,ChangeDetectorRef, OnInit } from '@angular/core';
 import { UsersService } from '../../services/users.service';
 import { FeedbacksService } from '../../services/feedbacks.service';
-import { User } from '../../interfaces/User';
+import { User, UserModel } from '../../interfaces/User';
 import { FeedbackModel } from 'src/app/interfaces/Feedback';
 import { DatePipe } from '@angular/common';
 import { switchMap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-feedback',
@@ -12,15 +13,28 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./feedback.component.css'],
   providers: [DatePipe]
 })
-export class FeedbackComponent {
+export class FeedbackComponent implements OnInit{
   text: string;
   banner:boolean;
+  user: UserModel = {};
   constructor(
     private usersService: UsersService,
     private feedbacksService: FeedbacksService,
     private datePipe: DatePipe,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    public router: Router
   ) { }
+
+  ngOnInit(): void {
+    this.usersService.getCurrentUser().subscribe((data) => {
+      if(data == null){
+        this.router.navigate(["/profile-edit"]);
+      } else {
+        this.user = data;
+      }
+      this.ref.detectChanges();
+    });
+  }
 
   onSubmit() {
     if (!this.text) {
