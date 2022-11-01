@@ -1,7 +1,7 @@
 export class Campaign{    
     CAMPAIGNS_ID?: string;
     CAMPAIGN_NAME?: string;
-    DESCRIPTIONS?: string;
+    DESCRIPTION?: string;
     TAGS?: string[];
     CATEGORY?: string;
     VENUE?: string;
@@ -9,5 +9,5 @@ export class Campaign{
     START_DATE?: number;
     END_DATE?: number;
     STATUS?: boolean;
-    APPLIED: string[];
+    APPLIED?: string[];
 }

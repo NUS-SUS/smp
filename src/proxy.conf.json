@@ -1,0 +1,7 @@
+{
+    "/nussmp/*": {
+        "target": "https://xue2n1beqj.execute-api.ap-southeast-1.amazonaws.com",
+        "secure": false,
+        "logLevel": "debug"
+    }
+}

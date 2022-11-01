@@ -1,12 +1,9 @@
-import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
-
-import { CampaignsService } from '../../services/campaigns.service';
-import { NgxNavigationWithDataComponent } from 'ngx-navigation-with-data';
-import { UsersService } from 'src/app/services/users.service';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Campaign } from 'src/app/interfaces/Campaign';
 import { UserModel } from 'src/app/interfaces/User';
-
-
-
+import { CampaignsService } from 'src/app/services/campaigns.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-campaign',
@@ -14,39 +11,32 @@ import { UserModel } from 'src/app/interfaces/User';
   styleUrls: ['./campaign.component.css']
 })
 export class CampaignComponent implements OnInit {
+  campaigns: Campaign[] = [];
+  user: UserModel = {};
+  constructor(private ref: ChangeDetectorRef, private usersService: UsersService, private router:Router, private campaignsService: CampaignsService) {
+  }
 
-  projects = [];
-  user: UserModel = {USER_TYPE:" "};
-  
-
-  constructor(private campaignsService: CampaignsService, private navCtrl: NgxNavigationWithDataComponent,
-    private userService: UsersService,private ref: ChangeDetectorRef,private ngZone: NgZone) { }
-
-  ngOnInit() {
-    this.ngZone.run(() => {
-    this.campaignsService.getCampaigns().subscribe(
-      (response: any ) => {
-        this.projects = response.campaigns; // add .data here.
-      },
-      () => console.log('error')
-    );
-
-    this.userService.getCurrentUser().subscribe(data => {
-      this.user = data
+  ngOnInit(): void {
+    this.usersService.getCurrentUser().subscribe((data) => {
+      if(data == null){
+        this.router.navigate(["/profile-edit"]);
+      } else {
+        this.user = data;
+      }
       this.ref.detectChanges();
-  })
-  })}
+    });
+    this.campaignsService.getCampaigns().subscribe((data: any) => {
+      this.campaigns = data.campaigns;
+    });
+  }
 
-  navigateToEdit(id: string) {
-    this.ngZone.run(() => {
-    this.navCtrl.navigate('/campaign-edit', {id:id});
-   })}
+  navigateToEdit(campaign: Campaign) {
+      this.campaignsService.setCurrentCampaign(campaign);
+      this.router.navigateByUrl('/edit-campaign');
+   }
 
    navigateToCreate() {
-    this.ngZone.run(() => {
-    this.navCtrl.navigate('/create-campaign');
-   })}
-
-   
+      this.router.navigateByUrl('/create-campaign');
+   }
 
 }

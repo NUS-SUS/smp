@@ -30,7 +30,7 @@
                                 <h5 class="mb-0">Descriptions</h5>
                             </div>
                             <div class="col-sm-9 text-secondary my-auto">
-                                {{campaign.DESCRIPTIONS}}
+                                {{campaign.DESCRIPTION}}
                             </div>
                         </div>
                         <hr>
@@ -49,7 +49,7 @@
                             </div>
                             <div class="col-sm-9 text-secondary my-auto">
                                 <div class="widget-26-job-category bg-soft-warning" *ngFor="let tag of campaign.TAGS">
-                                    <i class="indicator bg-warning"></i>
+                                    <em class="indicator bg-warning"></em>
                                     <span>{{tag}}</span>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@
                                 <div class="form-group">
                                     <a class="btn btn-secondary" style="float: left;"
                                         [routerLink]="['/discover']">Back</a>
-                                    <button [disabled]="applied === true" class="btn btn-success" style="float: right;"
+                                    <button *ngIf="showApply === true" [disabled]="applied === true" class="btn btn-success" style="float: right;"
                                         (click)="applyCampaign()" name="apply">Apply</button>
                                 </div>
                             </div>

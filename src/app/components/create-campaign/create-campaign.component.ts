@@ -1,14 +1,11 @@
-import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
-
-import { CampaignsService } from '../../services/campaigns.service';
-import { Campaign } from '../../interfaces/Campaign';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Campaign } from 'src/app/interfaces/Campaign';
+import { Classification } from 'src/app/interfaces/Classification';
+import { UserModel } from 'src/app/interfaces/User';
+import { CampaignsService } from 'src/app/services/campaigns.service';
 import { ClassificationsService } from 'src/app/services/classifications.service';
 import { UsersService } from 'src/app/services/users.service';
-import { UserModel } from 'src/app/interfaces/User';
-import { NgxNavigationWithDataComponent } from 'ngx-navigation-with-data';
-
-
 
 @Component({
   selector: 'app-create-campaign',
@@ -16,64 +13,33 @@ import { NgxNavigationWithDataComponent } from 'ngx-navigation-with-data';
   styleUrls: ['./create-campaign.component.css']
 })
 export class CreateCampaignComponent implements OnInit {
-
   title = 'Create Campaign';
-  campaigns: Campaign[];
-  campaign = new Campaign();
-  classifications: any = { classifications: [] };
-  tags: any[] = [{}];
-  categories: any[] = [{}];
+  campaign: Campaign = new Campaign();
+  tags: Classification[] = [];
+  categories: Classification[] = [];
   user: UserModel = {};
+  constructor( private usersService: UsersService, private campaignService: CampaignsService, public router: Router, private ref: ChangeDetectorRef, 
+    private classificationsService: ClassificationsService,private userService: UsersService) { }
 
-  constructor(private campaignService: CampaignsService, public router: Router, private ref: ChangeDetectorRef, private ngZone: NgZone, 
-    private classificationsService: ClassificationsService,private userService: UsersService,private navCtrl: NgxNavigationWithDataComponent) { }
-
-  ngOnInit() {
-    this.ngZone.run(() => {
-      this.getClassifications();
-      this.refreshCampaigns();
-      this.getUsers();
-    })
-    this.campaign.CAMPAIGNS_ID = '';
-    this.campaign.CAMPAIGN_NAME = '';
-    this.campaign.CATEGORY = '';
-    this.campaign.TAGS = [];
-    this.campaign.COMPANIES_ID = '';
-    this.campaign.DESCRIPTIONS = '';
-    this.campaign.START_DATE = null;
-    this.campaign.END_DATE = null;
-    this.campaign.VENUE = '';
-    this.campaign.STATUS = true;
-
-  }
-
-  refreshCampaigns() {
-    this.campaignService.getCampaigns()
-      .subscribe(data => {
-        console.log(data)
-        this.campaigns = data;
-      })
-
-  }
-
-  getUsers() {
-    this.userService.getCurrentUser().subscribe(data => {
-      this.user = data
-      console.log(data);
+  ngOnInit(): void {
+    this.usersService.getCurrentUser().subscribe((data) => {
+      if(data == null){
+        this.router.navigate(["/profile-edit"]);
+      } else {
+        this.user = data;
+      }
       this.ref.detectChanges();
-  })
+    });
+    this.getCategory();
   }
 
   navigateToFunds(){
-      this.ngZone.run(() => {
-      this.navCtrl.navigate('/checkout');
-     })}
+    this.router.navigateByUrl('/checkout');}
 
   minusFunds(){
     this.user.CAMPAIGN_FUNDS = this.user.CAMPAIGN_FUNDS - 5;
     this.userService.updateUser(this.user).subscribe(data =>{
       this.user = data
-      console.log(data);
       this.ref.detectChanges();
     })
   }
@@ -82,53 +48,39 @@ export class CreateCampaignComponent implements OnInit {
     const generateId = Date.now().toString();
     this.campaign.CAMPAIGNS_ID = generateId;
     this.campaign.COMPANIES_ID = this.user.COMPANY_NAME;
-    this.minusFunds();
+    this.campaign.STATUS = true;
+    this.campaign.APPLIED = [];
     this.campaignService.addCampaign(this.campaign)
-      .subscribe(data => {
-        console.log(data)
-        this.refreshCampaigns();
+      .subscribe(() => {
+        this.minusFunds();
         this.router.navigate(['/campaign']);
       })
   }
 
-  getClassifications() {
-    this.ngZone.run(() => {
-      this.classificationsService.getCategories().subscribe((data: any) => {
-        this.classifications = data;
-        this.getCategory();
-        this.ref.detectChanges();
-      });
-    });
-  }
-
   getCategory() {
-    this.ngZone.run(() => {
-      if (this.categories.length > 0) {
-        this.categories = [];
-      }
-      this.classifications.classifications.forEach((element) => {
-        if (element.TYPES === 'CATEGORY') {
-          this.categories.push(element);
-        }
-      });
-      this.ref.detectChanges();
-    });
-  }
+    this.classificationsService.getCategories().subscribe((data: any) => {
+     let categories = data.classifications;
+     for(let category of categories){
+       if (category.TYPES == 'CATEGORY'){
+         this.categories.push(category);
+       }
+     }
+     this.ref.detectChanges();
+    })
+   }
+ 
+   getTags() {
+     let parentId: any;
+     for(let category of this.categories) {
+       if(this.campaign.CATEGORY === category.VALUE){
+         parentId = category.CLASSIFICATIONS_ID;
+       }
+     }
+     this.classificationsService.getTags(parentId).subscribe((data: any) => {
+       this.tags = data.classifications;
+       this.campaign.TAGS = [];
+     });
+     this.ref.detectChanges();
+   }
 
-  getTags() {
-    this.ngZone.run(() => {
-      if (this.tags.length > 0) {
-        if (this.campaign.CATEGORY !== this.tags[0].PARENT) {
-          this.campaign.TAGS = [];
-        }
-        this.tags = [];
-      }
-      this.classifications.classifications.forEach((element) => {
-        if (element.TYPES === 'TAG' && element.PARENT === this.campaign.CATEGORY) {
-          this.tags.push(element);
-        }
-      });
-      this.ref.detectChanges();
-    });
-  }
 }

@@ -14,9 +14,7 @@ const httpOptions = {
 })
 export class CompaniesService {
 
-  //private REST_API_SERVER = "http://localhost:3000/users";
-  //private REST_API_SERVER = "http://localhost:5000/Companies";
-  private REST_API_SERVER = "https://35rvj69ep9.execute-api.ap-southeast-1.amazonaws.com/prod";
+  private REST_API_SERVER = "https://xue2n1beqj.execute-api.ap-southeast-1.amazonaws.com/nussmp";
   
   constructor(private httpClient: HttpClient) {
   }

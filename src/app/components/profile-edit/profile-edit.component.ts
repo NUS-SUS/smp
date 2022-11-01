@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, NgZone } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserModel } from 'src/app/interfaces/User';
 import { countries, languages } from 'countries-list';
@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 
 
 import { UsersService } from 'src/app/services/users.service';
-import { NgZone } from '@angular/core';
 import { ClassificationsService } from '../../services/classifications.service'
 
 @Component({
@@ -39,18 +38,18 @@ export class ProfileEditComponent implements OnInit {
     STREET_NAME: new FormControl('', [Validators.required]),
     UNIT_NUMBER: new FormControl('', [Validators.required]),
     USER_TYPE: new FormControl('', [Validators.required]),
-    CAMPAIGN_FUNDS: new FormControl(''),
+    CAMPAIGN_FUNDS: new FormControl(0),
     COMPANY_NAME: new FormControl(''),
     BIRTHDATE: new FormControl(''),
     CATEGORY: new FormControl(''),
     FULL_NAME: new FormControl(''),
     GENDER: new FormControl(''),
-    LANGUAGE: new FormControl(''),
+    LANGUAGE: new FormControl([]),
     NATIONALITY: new FormControl(''),
     PROFILE_PHOTO: new FormControl(''),
-    SOCIAL_MEDIA: new FormControl(''),
-    TAGS: new FormControl(''),
-    VERIFIED: new FormControl(''),
+    SOCIAL_MEDIA: new FormControl([]),
+    TAGS: new FormControl([]),
+    VERIFIED: new FormControl(false),
   });
 
   constructor(private ngZone: NgZone, private ref: ChangeDetectorRef, public fb: FormBuilder, public router: Router, private usersService: UsersService, private classificationsService: ClassificationsService) {
@@ -60,8 +59,8 @@ export class ProfileEditComponent implements OnInit {
     this.ngZone.run(() => {
       this.prepareNationalityDropdown();
       this.prepareLangaugeDropdown();
-      this.getClassifications();
       this.getUser();
+      this.getCategory();
     })
   }
 
@@ -113,38 +112,28 @@ export class ProfileEditComponent implements OnInit {
     })
   }
 
-  getClassifications() {
-    this.ngZone.run(() => {
-      this.classificationsService.getCategories().subscribe((data: any) => {
-        this.classifications = data;
-        this.ref.detectChanges();
-      });
-    });
-  }
-
-  async getCategory() {
-    if (this.categories.length > 0) {
-      this.categories = [];
-    }
-    await this.classifications.classifications.forEach((element) => {
-      if (element.TYPES === 'CATEGORY') {
-        this.categories.push(element);
+  getCategory() {
+   this.classificationsService.getCategories().subscribe((data: any) => {
+    let categories = data.classifications;
+    for(let category of categories){
+      if (category.TYPES == 'CATEGORY'){
+        this.categories.push(category);
       }
-    });
+    }
     this.ref.detectChanges();
+   })
   }
 
-  async getTags() {
-    if (this.tags.length > 0) {
-      if (this.profileForm.value.CATEGORY !== this.tags[0].PARENT) {
-        this.profileForm.controls['TAGS'].setValue([]);
+  getTags() {
+    let parentId: any;
+    for(let category of this.categories) {
+      if(this.profileForm.value.CATEGORY === category.VALUE){
+        parentId = category.CLASSIFICATIONS_ID;
       }
-      this.tags = [];
     }
-    await this.classifications.classifications.forEach((element) => {
-      if (element.TYPES === 'TAG' && element.PARENT === this.profileForm.value.CATEGORY) {
-        this.tags.push(element);
-      }
+    this.classificationsService.getTags(parentId).subscribe((data: any) => {
+      this.tags = data.classifications;
+      this.profileForm.controls['TAGS'].setValue([]);
     });
     this.ref.detectChanges();
   }
@@ -173,10 +162,6 @@ export class ProfileEditComponent implements OnInit {
       this.profileForm.controls['PROFILE_PHOTO'].setValue(user.PROFILE_PHOTO);
       this.profileForm.controls['SOCIAL_MEDIA'].setValue(user.SOCIAL_MEDIA);
 
-      this.getCategory();
-      this.getTags();
-      console.log(this.categories);
-      console.log(this.tags);
       this.ref.detectChanges();
     })
   }
@@ -185,7 +170,6 @@ export class ProfileEditComponent implements OnInit {
     this.ngZone.run(() => {
       this.profileForm.controls['EMAIL'].setValue(user.EMAIL);
       this.profileForm.controls['CAMPAIGN_FUNDS'].setValue(0);
-      this.getCategory();
     })
   }
 
@@ -206,8 +190,6 @@ export class ProfileEditComponent implements OnInit {
         }
         this.usersService.addUser(company).subscribe(() => {
           this.router.navigate(['/profile']);
-        }), (error => {
-          console.log(error);
         });
       }
       else {
@@ -230,8 +212,6 @@ export class ProfileEditComponent implements OnInit {
           }
           this.usersService.addUser(influencer).subscribe(() => {
             this.router.navigate(['/profile']);
-          }), (error => {
-            console.log(error);
           });
         }
       }
@@ -255,8 +235,6 @@ export class ProfileEditComponent implements OnInit {
         }
         this.usersService.updateUser(company).subscribe(() => {
           this.router.navigate(['/profile']);
-        }), (error => {
-          console.log(error);
         });
       }
       else {
@@ -279,8 +257,6 @@ export class ProfileEditComponent implements OnInit {
           }
           this.usersService.updateUser(influencer).subscribe(() => {
             this.router.navigate(['/profile']);
-          }), (error => {
-            console.log(error);
           });
         }
       }

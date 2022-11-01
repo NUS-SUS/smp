@@ -1,64 +1,58 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { NgxNavigationWithDataComponent } from 'ngx-navigation-with-data';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Auth } from 'aws-amplify';
-import { UsersService } from 'src/app/services/users.service';
-import { CampaignsService } from 'src/app/services/campaigns.service';
+import { Router } from '@angular/router';
 import { Campaign } from 'src/app/interfaces/Campaign';
+import { User } from 'src/app/interfaces/User';
+import { CampaignsService } from 'src/app/services/campaigns.service';
+import { UsersService } from 'src/app/services/users.service';
 
+ 
 @Component({
   selector: 'app-view-campaign',
   templateUrl: './view-campaign.component.html',
   styleUrls: ['./view-campaign.component.css']
 })
 export class ViewCampaignComponent implements OnInit {
-  campaign: any;
+  campaign: Campaign;
   applied: boolean = false;
-  email: string = "";
-
-  constructor(public navCtrl: NgxNavigationWithDataComponent, private campaignsService: CampaignsService, private ref: ChangeDetectorRef) { }
+  user: User;
+  showApply: boolean = false;
+  constructor(private router: Router, private usersService: UsersService, private campaignsService: CampaignsService, private ref: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-    this.campaign = {
-      CAMPAIGNS_ID: '',
-      CAMPAIGN_NAME: '',
-      DESCRIPTIONS: '',
-      TAGS: [],
-      CATEGORY: '',
-      VENUE: '',
-      COMPANIES_ID: '',
-      START_DATE: '',
-      END_DATE: '',
-      STATUS: '',
-      APPLIED: ['']
-    }
-    this.campaign = this.navCtrl.get('campaign');
-    this.checkEmail();
-    if(this.campaign.CAMPAIGN_NAME === null || this.campaign.CAMPAIGN_NAME === '') {
-      this.navCtrl.navigate('/discover');
-    }
-    Auth.currentAuthenticatedUser().then((user) => {
-      this.email = user.attributes.email;
-      this.checkEmail();
-    })
+    this.usersService.getCurrentUser().subscribe((data) => {
+      if(data == null){
+        this.router.navigate(["/profile-edit"]);
+      } else {
+        this.user = data;
+        this.campaign = JSON.parse(localStorage.getItem('campaign'));
+        this.checkEmail();
+        this.checkInfluencer();
+      }
+      this.ref.detectChanges();
+    });
   }
 
+  checkInfluencer() {
+    if(this.user.USER_TYPE == "Influencer") {
+      this.showApply = true; 
+    } else {
+      this.showApply = false; 
+    }
+  }
+  
   checkEmail() {
-      if(this.campaign.APPLIED.indexOf(this.email) > -1) {
-        this.applied = true;
-        this.ref.detectChanges();
-      }
-    this.ref.detectChanges();
+    if(this.campaign.APPLIED.indexOf(this.user.EMAIL) > -1) {
+      this.applied = true;
+      this.ref.detectChanges();
+    }
   }
 
   applyCampaign() {
-    this.campaign.APPLIED.push(this.email);
+    this.campaign.APPLIED.push(this.user.EMAIL);
     let campaign = {
       CAMPAIGNS_ID: this.campaign.CAMPAIGNS_ID,
       CAMPAIGN_NAME: this.campaign.CAMPAIGN_NAME,
-      DESCRIPTIONS: this.campaign.DESCRIPTIONS,
+      DESCRIPTION: this.campaign.DESCRIPTION,
       TAGS: this.campaign.TAGS,
       CATEGORY: this.campaign.CATEGORY,
       VENUE: this.campaign.VENUE,
@@ -70,7 +64,6 @@ export class ViewCampaignComponent implements OnInit {
     }
     this.campaignsService.updateCampaign(campaign).subscribe(data => {
       this.applied = true;
-      console.log(data);
     });
     this.ref.detectChanges();
   }

@@ -1,7 +1,8 @@
-import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
-import { NgxNavigationWithDataComponent } from 'ngx-navigation-with-data';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Campaign } from 'src/app/interfaces/Campaign';
 import { CampaignsService } from 'src/app/services/campaigns.service';
+import { Router } from '@angular/router';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-discover',
@@ -9,68 +10,53 @@ import { CampaignsService } from 'src/app/services/campaigns.service';
   styleUrls: ['./discover.component.css']
 })
 export class DiscoverComponent implements OnInit {
-	campaigns: any[] = [{
-    CAMPAIGNS_ID: null,
-    CAMPAIGN_NAME: null,
-    DESCRIPTIONS: null,
-    TAGS: null,
-    CATEGORY: null,
-    VENUE: null,
-    COMPANIES_ID: null,
-    START_DATE: null,
-    END_DATE: null,
-    STATUS: null
-  }];
+  selectedCampaign: any;
+  campaigns: Campaign[] = null;
   result: Campaign[] = [];
   query : string = "";
   category: string = "";
   categoryList: string[] = [];
+  constructor(private router : Router, private campaignsService: CampaignsService, private ref: ChangeDetectorRef, private usersService: UsersService) { }
 
-  constructor(private ngZone: NgZone, private ref: ChangeDetectorRef, private campaignsService: CampaignsService, private navCtrl: NgxNavigationWithDataComponent) { }
-
-  ngOnInit(): void { 
-
+  ngOnInit(): void {
+    this.usersService.getCurrentUser().subscribe((data) => {
+      if(data == null){
+        this.router.navigate(["/profile-edit"]);
+      }
+      this.ref.detectChanges();
+    });
     this.campaignsService.getCampaigns().subscribe((data: any) => {
       this.campaigns = data.campaigns;
       this.getCategoryList();
       this.search();
     })
-
   }
 
-  async getCategoryList() {
-    await this.campaigns.forEach((campaign: Campaign) => {
+  getCategoryList() {
+    this.campaigns.forEach((campaign: Campaign) => {
       if((!this.categoryList.includes(campaign.CATEGORY)) && campaign.STATUS === true){
         this.categoryList.push(campaign.CATEGORY);
       }
     })
   }
 
-  async search() {
-    console.log(this.category);
+  search() {
     this.result = [];
-    await this.campaigns.forEach((campaign: Campaign) => {
+    this.campaigns.forEach((campaign: Campaign) => {
       if(campaign.STATUS === true) {
-        console.log(campaign.CATEGORY);
-        if(this.category !== "" && this.category === campaign.CATEGORY && this.query !== "" && campaign.CAMPAIGN_NAME.toUpperCase().includes(this.query.toUpperCase())) {
-          this.result.push(campaign);
-        }
-        else if(this.category !== "" && this.category === campaign.CATEGORY && this.query === "") {
-          this.result.push(campaign);
-        }
-        else if(this.category === "" && this.query === "") {
+        if((this.category !== "" && this.category === campaign.CATEGORY && this.query !== "" && campaign.CAMPAIGN_NAME.toUpperCase().includes(this.query.toUpperCase())) ||
+        (this.category !== "" && this.category === campaign.CATEGORY && this.query === "") ||
+        (this.category === "" && this.query === "")) {
           this.result.push(campaign);
         }
       }
     });
-    console.log(this.result);
     this.ref.detectChanges();
   }
 
   viewCampaign(campaign: Campaign){
-    this.ngZone.run(() => {
-      this.navCtrl.navigate('/view-campaign', {campaign: campaign});
-     })
+    this.campaignsService.setCurrentCampaign(campaign);
+    this.router.navigateByUrl('/view-campaign');
   }
 
 }

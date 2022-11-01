@@ -1,12 +1,9 @@
-<mat-card>
-    <div *ngIf="user">
-        <mat-card-header>
-            <mat-card-title>
-                <h1>{{page.title}}<span *ngIf="user.FULL_NAME">{{user.FULL_NAME}}</span><span *ngIf="user.COMPANY_NAME">{{user.COMPANY_NAME}}</span></h1>
-            </mat-card-title>
-            <mat-card-subtitle>{{page.subtitle}}<br>{{page.content}}{{user.NATIONALITY}}</mat-card-subtitle>
-        </mat-card-header>
-    </div>
-</mat-card>
 <div style="background-image: url('https://miro.medium.com/max/2000/0*72mDyfTcxtjgErD6.jpg'); width: 100%; height: 850px; background-size: cover;"
-    layout="row" layout-align="center center"></div>
+    layout="row" layout-align="center center">
+    <div class="card" *ngIf="user !== null">
+        <div class="card-body">
+          <h5 class="card-title">Welcome, <span *ngIf="user.FULL_NAME">{{user.FULL_NAME}}</span><span *ngIf="user.COMPANY_NAME">{{user.COMPANY_NAME}}</span></h5>
+         <h5 class="card-subtitle mb-2 text-muted">{{user.NATIONALITY}}</h5>
+        </div>
+      </div>
+</div>

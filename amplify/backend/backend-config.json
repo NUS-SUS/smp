@@ -1,14 +1,16 @@
 {
   "auth": {
-    "smp01baf00f": {
+    "smpdcdce7b3": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
       "customAuth": false,
       "frontendAuthConfig": {
-        "loginMechanisms": [
-          "PREFERRED_USERNAME"
+        "socialProviders": [
+          "FACEBOOK",
+          "GOOGLE"
         ],
+        "usernameAttributes": [],
         "signupAttributes": [
           "EMAIL"
         ],
@@ -24,6 +26,13 @@
           "EMAIL"
         ]
       }
+    }
+  },
+  "hosting": {
+    "amplifyhosting": {
+      "service": "amplifyhosting",
+      "type": "cicd",
+      "lastPushTimeStamp": "2022-08-17T07:53:00.690Z"
     }
   }
 }

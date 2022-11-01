@@ -14,9 +14,7 @@ const httpOptions = {
 export class CampaignsService {
   private currentCampaign: Campaign;
 
-  // baseURL: string = "http://localhost:3000/";
-  // private REST_API_SERVER = "http://localhost:3000/campaigns";
-  private REST_API_SERVER = "https://u5ox4cblbj.execute-api.ap-southeast-1.amazonaws.com/prod";
+  private REST_API_SERVER = "https://xue2n1beqj.execute-api.ap-southeast-1.amazonaws.com/nussmp";
 
   constructor(private httpClient: HttpClient) { }
 
@@ -40,6 +38,17 @@ export class CampaignsService {
   public addCampaign(campaign: Campaign): Observable<Campaign> {
     const url = `${this.REST_API_SERVER}/campaign`;
     return this.httpClient.post<Campaign>(url, campaign, httpOptions);
+  }
+
+  public setCurrentCampaign(campaign: Campaign) {
+    this.currentCampaign = campaign;
+    let a = JSON.stringify(campaign);
+    localStorage.setItem('campaign', a);
+    
+  }
+
+  public getCurrentCampaign() {
+    return this.currentCampaign;
   }
 
 }

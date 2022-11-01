@@ -1,45 +1,41 @@
-<amplify-authenticator *ngIf="authState !== 'signedin'"></amplify-authenticator>
-<div *ngIf="authState === 'signedin' && user">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/home">Marketing Portal</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarText" >
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="isCompany == true || isInfluencer == true">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/discover">Discover</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/campaign">Campaign</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/profile">Profile</a>
-                    </li>
-                    <li class="nav-item" *ngIf="isCompany == true">
-                        <a class="nav-link" href="/checkout">Add Credit</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/feedback">Give Your Feedback</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav pull-right">
-                    <li class="nav-item pull-right">
-                        <a class="nav-link" align="center" *ngIf="isCompany == true || isInfluencer == true">
-                            Hi, {{displayName}}
-                        </a>
-                        <a class="nav-link">
-                            <amplify-sign-out></amplify-sign-out>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <router-outlet></router-outlet>
-</div>
+<amplify-authenticator>
+  <ng-template
+    amplifySlot="authenticated"
+    let-user="user"
+    let-signOut="signOut"
+  >
+  <nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/home">Social Marketing Portal</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="/home">Home</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/discover">Discover</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/campaign">Campaign</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/profile">Profile</a>
+          </li>
+          <li class="nav-item" *ngIf="isCompany == true">
+            <a class="nav-link" href="/checkout">Add Credit</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/feedback">Give Your Feedback</a>
+          </li>
+        </ul>
+          <a class="navbar-brand">{{ displayName }}</a>
+          <button (click)="signOut()" class="btn btn-outline-success">Sign Out</button>
+      </div>
+    </div>
+  </nav>
+  <router-outlet></router-outlet>
+  </ng-template>
+</amplify-authenticator>

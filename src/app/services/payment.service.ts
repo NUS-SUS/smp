@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
-import { Observable, of } from 'rxjs';
-import { Payment, PaymentModel } from '../interfaces/Payment';
+import { Observable } from 'rxjs';
+import { Payment } from '../interfaces/Payment';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -13,15 +13,12 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class PaymentService {
-    //private REST_API_SERVER = "http://localhost:3000/users";
-  // private REST_API_SERVER = "http://localhost:5001/Payments";
-  private REST_API_SERVER = "https://e7elrzd8a0.execute-api.ap-southeast-1.amazonaws.com/prod";
+  private REST_API_SERVER = "https://xue2n1beqj.execute-api.ap-southeast-1.amazonaws.com/nussmp";
 
   constructor(private httpClient: HttpClient) { 
   }
   
   public getPayments(): Observable<Payment[]> {
-    const url = `${this.REST_API_SERVER}/payments`;
     return this.httpClient.get<Payment[]>(this.REST_API_SERVER,httpOptions);
   }
 

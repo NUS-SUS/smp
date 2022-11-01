@@ -14,7 +14,7 @@ const httpOptions = {
 })
 export class FeedbacksService {
 
-  private REST_API_SERVER = "https://7wq799eamb.execute-api.ap-southeast-1.amazonaws.com/prod";
+  private REST_API_SERVER = "https://xue2n1beqj.execute-api.ap-southeast-1.amazonaws.com/nussmp";
 
   constructor(private httpClient: HttpClient) {
   }
@@ -30,7 +30,7 @@ export class FeedbacksService {
   }
 
   public deleteFeedback(feedback: Feedback): Observable<Feedback> {
-    const url = `${this.REST_API_SERVER}/feedback?FEEDBACKS_ID=${feedback.FEEDBACKS_ID}`;
+    const url = `${this.REST_API_SERVER}/feedback?FEEDBACKS_ID=${feedback.FEEDBACK_ID}`;
     return this.httpClient.delete<Feedback>(url, httpOptions);
   }
   public updateFeedback(feedback: Feedback): Observable<Feedback> {

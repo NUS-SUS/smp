@@ -1,20 +1,17 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { InjectionToken } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { StripeService } from 'ngx-stripe';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { CheckoutComponent } from './checkout.component';
 
-
-describe('CheckoutComponent', () => {
+describe('CheckoutCompleteComponent', () => {
   let component: CheckoutComponent;
   let fixture: ComponentFixture<CheckoutComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ HttpClientTestingModule, ],
-      declarations: [ CheckoutComponent ],
-      providers: [ StripeService, InjectionToken ]
+      imports: [RouterTestingModule, HttpClientTestingModule],
+      declarations: [ CheckoutComponent ]
     })
     .compileComponents();
   });
@@ -25,7 +22,7 @@ describe('CheckoutComponent', () => {
     fixture.detectChanges();
   });
 
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

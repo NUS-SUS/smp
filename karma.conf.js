@@ -25,7 +25,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/marketing-portal'),
+      dir: require('path').join(__dirname, './coverage/smp'),
       subdir: '.',
       reporters: [
         { type: 'html' },
@@ -37,13 +37,7 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['ChromeHeadless'],
-    customLaunchers: {
-      ChromeHeadlessCI: {
-        base: 'ChromeHeadless',
-        flags: ['--no-sandbox'],
-      },
-    },
+    browsers: ['Chrome'],
     singleRun: false,
     restartOnFileChange: true
   });
